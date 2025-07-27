@@ -78,7 +78,7 @@ Acabei de confirmar minha presença no bootcamp que pode mudar minha vida profis
 
 Vem comigo nessa jornada! ${window.location.origin}`
 
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`
+          const url = `https://go.rodolfomori.com.br/suporte`
     window.open(url, '_blank')
   }
 

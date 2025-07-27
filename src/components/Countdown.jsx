@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo, useRef } from 'react'
 import { motion } from 'framer-motion'
 
-const Countdown = ({ targetDate }) => {
+const Countdown = memo(({ targetDate }) => {
+  const intervalRef = useRef(null)
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -31,9 +32,14 @@ const Countdown = ({ targetDate }) => {
     }
 
     calculateTimeLeft()
-    const timer = setInterval(calculateTimeLeft, 1000)
+    intervalRef.current = setInterval(calculateTimeLeft, 1000)
 
-    return () => clearInterval(timer)
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+    }
   }, [targetDate])
 
   const timeUnits = [
@@ -127,6 +133,6 @@ const Countdown = ({ targetDate }) => {
       </motion.div>
     </div>
   )
-}
+})
 
-export default Countdown 
+export default Countdown

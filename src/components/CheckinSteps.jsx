@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import CredentialGenerator from './CredentialGenerator'
 import CredentialModal from './CredentialModal'
@@ -12,6 +12,16 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
   const [ticketId, setTicketId] = useState(null)
   const [isCredentialModalOpen, setIsCredentialModalOpen] = useState(false)
   const [shouldGenerateCredential, setShouldGenerateCredential] = useState(false)
+  
+  // Novos estados para os checkboxes
+  const [zoomCheckbox, setZoomCheckbox] = useState(false)
+  const [equipmentCheckboxes, setEquipmentCheckboxes] = useState({
+    computer: false,
+    paper: false,
+    pen: false,
+    quietPlace: false,
+    internet: false
+  })
   
   const audioRef = useRef(null)
   const fileInputRef = useRef(null)
@@ -54,8 +64,8 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
       id: 1,
       icon: '📅',
       title: 'Adicionar na Agenda',
-      description: 'Reserve o horário da primeira aula',
-      buttonText: 'Adicionei a aula de domingo às 20h',
+      description: 'Adicione o evento no seu Google Calendar com link do Zoom',
+      buttonText: 'Adicionei no meu calendário',
       color: 'bg-purple-500',
       type: 'action'
     },
@@ -70,15 +80,24 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
     },
     {
       id: 3,
-      icon: '💻',
-      title: 'Preparar Ambiente',
-      description: 'Certifique-se de ter tudo pronto',
-      buttonText: 'Tenho computador, papel e caneta prontos',
-      color: 'bg-orange-500',
-      type: 'checklist'
+      icon: '📹',
+      title: 'Configurar Zoom',
+      description: 'Baixe o Zoom e teste áudio/vídeo',
+      buttonText: 'Zoom configurado e testado',
+      color: 'bg-indigo-500',
+      type: 'zoom'
     },
     {
       id: 4,
+      icon: '💻',
+      title: 'Preparar Ambiente',
+      description: 'Certifique-se de ter tudo pronto',
+      buttonText: 'Tenho tudo preparado',
+      color: 'bg-orange-500',
+      type: 'equipment'
+    },
+    {
+      id: 5,
       icon: '🎫',
       title: 'Gerar Ingresso Personalizado',
       description: 'Adicione sua foto e gere seu ingresso exclusivo',
@@ -98,13 +117,48 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
         return
       }
              onStepComplete(stepIndex, { name: formData.name })
+    } else if (stepIndex === 1) {
+      // Open Google Calendar for step 2 - Bootcamp Programador em 7 dias
+      // Data: 03/08/2024 das 20:00-21:00 (Brasília) | 23:00-00:00 (UTC)
+      // Local: Zoom Meeting ID 87179390873
+      const calendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=Bootcamp+Programador+em+7+dias&details=Link+da+call%3A+https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&location=https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&dates=20240803T230000Z%2F20240804T000000Z"
+      
+      try {
+        const newWindow = window.open(calendarUrl, '_blank')
+        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+          // Popup foi bloqueado, mostrar fallback
+          if (confirm('📅 Vamos abrir o Google Calendar para você adicionar o evento!\n\nSe o popup foi bloqueado, clique OK para tentar novamente.')) {
+            window.location.href = calendarUrl
+          }
+        }
+      } catch (error) {
+        // Fallback caso haja erro
+        window.location.href = calendarUrl
+      }
+      
+      setTimeout(() => onStepComplete(stepIndex), 1000)
     } else if (stepIndex === 2) {
       // Open WhatsApp for step 3
-      const whatsappUrl = "https://wa.me/5511999999999?text=Olá! Completei o check-in do Bootcamp Programador em 7 Dias 🚀"
+      const whatsappUrl = "https://go.rodolfomori.com.br/suporte"
       window.open(whatsappUrl, '_blank')
       setTimeout(() => onStepComplete(stepIndex), 1000)
+    } else if (stepIndex === 3) {
+      // Zoom configuration step
+      if (!zoomCheckbox) {
+        alert('Por favor, confirme que você baixou o Zoom e testou áudio/vídeo')
+        return
+      }
+      onStepComplete(stepIndex)
     } else if (stepIndex === 4) {
-      console.log('🎫 Step 4 (credencial) detectado!')
+      // Equipment preparation step
+      const allChecked = Object.values(equipmentCheckboxes).every(checked => checked)
+      if (!allChecked) {
+        alert('Por favor, confirme todos os itens necessários')
+        return
+      }
+      onStepComplete(stepIndex)
+    } else if (stepIndex === 5) {
+      console.log('🎫 Step 5 (credencial) detectado!')
       // Gerar credencial
       generateCredential()
       return
@@ -154,9 +208,23 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
     setTicketId(generatedTicketId)
     setIsCredentialModalOpen(true)
     setShouldGenerateCredential(false) // Reset do trigger
-    onStepComplete(4) // Completar o último passo
+    onStepComplete(5) // Completar o último passo
     playSuccessSound()
   }
+
+  // Reset checkboxes when modal is closed
+  useEffect(() => {
+    if (currentStep === 0) {
+      setZoomCheckbox(false)
+      setEquipmentCheckboxes({
+        computer: false,
+        paper: false,
+        pen: false,
+        quietPlace: false,
+        internet: false
+      })
+    }
+  }, [currentStep])
 
   const isStepAccessible = (stepIndex) => {
     return stepIndex <= currentStep
@@ -255,8 +323,8 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
             </motion.div>
           )}
 
-          {/* Step 4 - Credential Generation */}
-          {step.id === 4 && currentStep === 4 && !isStepCompleted(4) && (
+          {/* Step 5 - Credential Generation */}
+          {step.id === 5 && currentStep === 5 && !isStepCompleted(5) && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
@@ -322,31 +390,119 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
             </motion.div>
           )}
 
-          {/* Step 3 - Checklist */}
+          {/* Step 3 - Zoom Configuration */}
           {step.id === 3 && currentStep === 3 && !isStepCompleted(3) && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mb-4 p-4 glass-card"
+              className="mb-4 p-6 glass-card"
             >
-              <div className="space-y-3">
-                <h4 className="font-medium text-text-light">Verifique se você tem:</h4>
-                <div className="space-y-2">
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h4 className="text-lg font-semibold text-text-light mb-2">
+                    📹 Configure o Zoom
+                  </h4>
+                  <p className="text-text-muted text-sm">
+                    Para participar das aulas ao vivo, você precisa ter o Zoom instalado e testado
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
+                    <h5 className="font-medium text-text-light mb-3">Passos necessários:</h5>
+                    <div className="space-y-3">
+                      {[
+                        'Baixar o Zoom (gratuito)',
+                        'Criar uma conta no Zoom',
+                        'Testar microfone e câmera',
+                        'Verificar se o áudio está funcionando'
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded bg-primary/20 flex items-center justify-center">
+                            <span className="text-primary text-xs font-bold">{i + 1}</span>
+                          </div>
+                          <span className="text-text-light text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-4 bg-white/5 rounded-lg">
+                    <input
+                      type="checkbox"
+                      id="zoom-checkbox"
+                      checked={zoomCheckbox}
+                      onChange={(e) => setZoomCheckbox(e.target.checked)}
+                      className="w-5 h-5 text-primary bg-transparent border-2 border-primary/30 rounded focus:ring-primary/50 focus:ring-2"
+                    />
+                    <label htmlFor="zoom-checkbox" className="text-text-light text-sm cursor-pointer">
+                      <strong>Confirmo que:</strong> Baixei o Zoom, criei uma conta e testei meu áudio e vídeo
+                    </label>
+                  </div>
+
+                  <div className="text-center">
+                    <a
+                      href="https://zoom.us/download"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg transition-colors duration-200"
+                    >
+                      📥 Baixar Zoom
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 4 - Equipment Checklist */}
+          {step.id === 4 && currentStep === 4 && !isStepCompleted(4) && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="mb-4 p-6 glass-card"
+            >
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h4 className="text-lg font-semibold text-text-light mb-2">
+                    💻 Prepare seu Ambiente
+                  </h4>
+                  <p className="text-text-muted text-sm">
+                    Marque todos os itens que você tem disponível para o bootcamp
+                  </p>
+                </div>
+
+                <div className="space-y-3">
                   {[
-                    'Computador ou notebook funcionando',
-                    'Papel e caneta para anotações',
-                    'Local tranquilo para assistir',
-                    'Conexão de internet estável'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded bg-primary/20 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-text-light text-sm">{item}</span>
+                    { key: 'computer', label: 'Computador ou notebook funcionando', icon: '💻' },
+                    { key: 'paper', label: 'Papel para anotações', icon: '📄' },
+                    { key: 'pen', label: 'Caneta para escrever', icon: '✏️' },
+                    { key: 'quietPlace', label: 'Local tranquilo para assistir', icon: '🏠' },
+                    { key: 'internet', label: 'Conexão de internet estável', icon: '🌐' }
+                  ].map((item) => (
+                    <div key={item.key} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                      <input
+                        type="checkbox"
+                        id={`equipment-${item.key}`}
+                        checked={equipmentCheckboxes[item.key]}
+                        onChange={(e) => setEquipmentCheckboxes(prev => ({
+                          ...prev,
+                          [item.key]: e.target.checked
+                        }))}
+                        className="w-5 h-5 text-primary bg-transparent border-2 border-primary/30 rounded focus:ring-primary/50 focus:ring-2"
+                      />
+                      <label htmlFor={`equipment-${item.key}`} className="flex items-center gap-3 text-text-light text-sm cursor-pointer flex-1">
+                        <span className="text-lg">{item.icon}</span>
+                        <span>{item.label}</span>
+                      </label>
                     </div>
                   ))}
+                </div>
+
+                <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
+                  <p className="text-text-light text-sm">
+                    <strong>💡 Dica:</strong> Ter todos esses itens prontos vai garantir que você aproveite ao máximo o bootcamp!
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -362,7 +518,7 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
       ))}
 
       {/* Final Success State */}
-      {completedSteps.length === 5 && (
+      {completedSteps.length === 6 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

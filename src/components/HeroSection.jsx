@@ -37,7 +37,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
         transition={{ delay: 1, duration: 0.8 }}
         className="badge-float"
       >
-        <span className="text-glow">✨ 10.000+ confirmados</span>
+        <span className="text-glow">✨ 90% confirmados</span>
       </motion.div>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -46,7 +46,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-8 text-center lg:text-left"
+          className="space-y-6 lg:space-y-8 text-center lg:text-left"
         >
           {/* Alert Badge */}
           <motion.div
@@ -60,10 +60,10 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           </motion.div>
 
           {/* Main Title with Typing Effect */}
-          <div className="space-y-4">
+          <div className="space-y-3 lg:space-y-4">
             <TypingText
               text="O Bootcamp Programador em 7 Dias está chegando"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light leading-tight"
+              className="text-3xl md:text-4xl lg:text-6xl font-bold text-text-light leading-tight"
               delay={0.8}
             />
             
@@ -71,44 +71,66 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, duration: 0.8 }}
-              className="text-xl md:text-2xl text-text-muted"
+              className="text-lg md:text-xl lg:text-2xl text-text-muted"
             >
               Você precisa confirmar sua presença{' '}
               <span className="text-primary font-semibold text-glow">AGORA</span>
             </motion.h2>
           </div>
 
-          {/* Countdown */}
+          {/* CTA Button - Mobile: Above fold, Desktop: Hidden (shown in right column) */}
+          {showCTA && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 2.8, duration: 0.6, ease: "easeOut" }}
+              className="flex justify-center lg:hidden"
+            >
+              <button
+                onClick={handleStartCheckin}
+                className="btn-primary btn-pulse text-xl md:text-2xl px-12 py-6 font-bold uppercase tracking-wide w-full max-w-md"
+              >
+                <span className="flex items-center justify-center gap-3">
+                  <span>🚀</span>
+                  <span>INICIAR CHECK-IN</span>
+                </span>
+              </button>
+            </motion.div>
+          )}
+
+          {/* Countdown - Compact on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3, duration: 0.8 }}
+            className="lg:scale-100 scale-90"
           >
             <Countdown targetDate="2025-08-03T20:00:00" />
           </motion.div>
 
-          {/* Subtitle */}
+          {/* Subtitle - Shorter on mobile */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.5, duration: 0.8 }}
             className="text-lg md:text-xl text-text-muted max-w-2xl"
           >
-            🎯 Confirme sua presença e garanta sua vaga no Bootcamp que já transformou a vida de{' '}
-            <span className="text-primary font-semibold">milhares de pessoas</span>
+            <span className="hidden lg:inline">🎯 Confirme sua presença e garanta sua vaga no Bootcamp que já transformou a vida de{' '}
+            <span className="text-primary font-semibold">milhares de pessoas</span></span>
+            <span className="lg:hidden">🎯 Garante sua vaga no Bootcamp que já transformou <span className="text-primary font-semibold">milhares de vidas</span></span>
           </motion.p>
 
-          {/* Warning */}
+          {/* Warning - Compact on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 4, duration: 0.8 }}
-            className="bg-yellow-500/10 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-4"
+            className="bg-yellow-500/10 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 lg:p-4"
           >
-            <p className="text-yellow-400 font-medium flex items-center gap-2">
-              <span className="text-xl">⚠️</span>
+            <p className="text-yellow-400 font-medium flex items-start lg:items-center gap-2 text-sm lg:text-base">
+              <span className="text-lg lg:text-xl flex-shrink-0">⚠️</span>
               <span>
-                <strong>ATENÇÃO:</strong> O check-in é OBRIGATÓRIO e deve ser feito até domingo, dia 3 de agosto, às 18h.
+                <strong>ATENÇÃO:</strong> <span className="hidden lg:inline">O check-in é OBRIGATÓRIO e deve ser feito até</span><span className="lg:hidden">Check-in até</span> domingo, dia 3 de agosto, às 18h.
               </span>
             </p>
           </motion.div>
@@ -120,21 +142,21 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-          className="relative space-y-6 lg:-mt-16"
+          className="relative space-y-6 lg:-mt-16 mt-8 lg:mt-0"
         >
           <VideoSection />
           
-          {/* CTA Button - Desktop: Right side, Mobile: Below content */}
+          {/* CTA Button - Desktop: Right side, Mobile: Hidden (shown in left column) */}
           {showCTA && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex justify-center lg:justify-end"
+              className="hidden lg:flex lg:justify-end"
             >
               <button
                 onClick={handleStartCheckin}
-                className="btn-primary btn-pulse text-xl md:text-2xl px-12 py-6 font-bold uppercase tracking-wide w-full lg:w-auto"
+                className="btn-primary btn-pulse text-xl md:text-2xl px-12 py-6 font-bold uppercase tracking-wide w-auto"
               >
                 <span className="flex items-center justify-center gap-3">
                   <span>🚀</span>

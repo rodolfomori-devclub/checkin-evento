@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp Programador com IA em 7 Dias - DevClub</title>
+    <meta name="description" content="Construa seu primeiro projeto com IA, monte um currículo que chame atenção e saia com um plano prático para ser contratado como programador.">
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Meta tags for social sharing -->
+    <meta property="og:title" content="Bootcamp Programador com IA em 7 Dias">
+    <meta property="og:description" content="Do zero ao primeiro emprego como programador em até 6 meses">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-center">🚀</div>
+        </div>
+        <div class="loading-content">
+            <div class="loading-title">Inicializando Bootcamp</div>
+            <div class="loading-subtitle">Preparando sua jornada para o primeiro emprego...</div>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="progress-text" class="progress-text">0%</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+
+
+    <!-- Particle System -->
+    <div id="particle-container" class="particle-container"></div>
+
+    <!-- Floating Blobs -->
+    <div class="floating-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <span class="logo-text">DevClub</span>
+                        <span class="logo-badge">Bootcamp</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        🚀 Bootcamp Intensivo de 7 dias
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="typing-text" data-text="Construa seu primeiro projeto com IA"></span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Monte um currículo que chame atenção e saia com um plano prático que já levou 
+                        milhares de pessoas do zero ao primeiro "sim" como programador.
+                    </p>
+
+                    <div class="hero-benefits">
+                        <div class="benefit-item">✅ Certificado de participação</div>
+                        <div class="benefit-item">✅ Sorteio de um notebook</div>
+                        <div class="benefit-item">✅ Aprenda as techs que o mercado mais pede: HTML, CSS, JS e IA</div>
+                        <div class="benefit-item">✅ Descubra como ser contratado mesmo começando do zero</div>
+                        <div class="benefit-item">✅ Acesso a materiais extras + suporte com time humano e IA</div>
+                    </div>
+
+                    <div class="price-section">
+                        <div class="old-price">De R$147 por</div>
+                        <div class="current-price">R$17</div>
+                    </div>
+
+                    <button class="cta-button" onclick="scrollToOffer()">
+                        <span>GARANTIR MEU INGRESSO AGORA</span>
+                        <div class="button-glow"></div>
+                    </button>
+
+                    <div class="professor-info">
+                        <div class="professor-avatar">
+                            <div class="avatar-placeholder">RM</div>
+                        </div>
+                        <div class="professor-text">
+                            <strong>Rodolfo Mori</strong><br>
+                            Fundador DevClub
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Section -->
+        <section class="project-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>❌ Nunca escreveu uma linha de código? Relaxa!</h2>
+                    <p>A didática vai ser tão simples que qualquer um vai conseguir acompanhar...</p>
+                </div>
+
+                <div class="project-showcase">
+                    <div class="project-info">
+                        <h3>Esse será o seu primeiro projeto real de programação construído do zero comigo:</h3>
+                        <div class="project-title">App de Previsão do Tempo Inteligente</div>
+                        <p>Construído do absoluto zero comigo, usando as tecnologias que o mercado exige nas contratações: HTML, CSS, JavaScript e lógica de programação pra integrar dados em tempo real e criar um app funcional de verdade.</p>
+                    </div>
+                    <div class="project-mockup">
+                        <div class="mockup-container">
+                            <div class="mockup-screen">
+                                <div class="weather-app">
+                                    <div class="weather-header">🌤️ Previsão do Tempo</div>
+                                    <div class="weather-temp">25°C</div>
+                                    <div class="weather-location">São Paulo, SP</div>
+                                    <div class="weather-details">
+                                        <span>Umidade: 65%</span>
+                                        <span>Vento: 15 km/h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Agora deixa eu te mostrar como o Bootcamp vai funcionar na prática:</h2>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-item" data-step="1">
+                        <div class="step-icon">🎯</div>
+                        <div class="step-content">
+                            <h3>Etapa 1: Fundamentos que contratam</h3>
+                            <p>Entenda o que realmente importa pra entrar no mercado da programação, quais são as tecnologias mais pedidas pelas empresas hoje...</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item" data-step="2">
+                        <div class="step-icon">🛠</div>
+                        <div class="step-content">
+                            <h3>Etapa 2: Mão na massa com seu primeiro projeto real</h3>
+                            <p>Hora de "codar". Junto comigo, você vai criar do zero um app de previsão do tempo inteligente...</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item" data-step="3">
+                        <div class="step-icon">💸</div>
+                        <div class="step-content">
+                            <h3>Etapa 3: Como transformar esse projeto em grana</h3>
+                            <p>Mesmo que você esteja começando, eu vou te mostrar como transformar esse projeto em dinheiro na conta...</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item" data-step="4">
+                        <div class="step-icon">📄</div>
+                        <div class="step-content">
+                            <h3>Etapa 4: Currículo que abre portas</h3>
+                            <p>Entenda o que realmente chama atenção do recrutador, como montar um currículo que destaque...</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item" data-step="5">
+                        <div class="step-icon">🚀</div>
+                        <div class="step-content">
+                            <h3>Etapa 5: Plano de ação rumo ao primeiro emprego</h3>
+                            <p>Hora de conectar todos os pontos. Você vai sair com clareza do que fazer no dia seguinte...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-center">
+                    <button class="cta-button" onclick="scrollToOffer()">
+                        QUERO GARANTIR O MEU LUGAR
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Section -->
+        <section class="why-choose">
+            <div class="container">
+                <div class="why-content">
+                    <h2>"Pô, mas já tem tanto conteúdo gratuito de programação, porque eu deveria participar desse evento?"</h2>
+                    <p>Cara, seguinte... De fato existem muitos conteúdos gratuitos de programação por aí. Inclusive o nosso, do DevClub, entrega mais do que muito curso pago por aí e já ajudou milhares de pessoas a darem os primeiros passos.</p>
+                    <p><strong>Mas tem um limite.</strong></p>
+                    <div class="limitations">
+                        <span>De tempo...</span>
+                        <span>De profundidade...</span>
+                        <span>De prática...</span>
+                        <span>E, principalmente, limite no seu compromisso com a parada</span>
+                    </div>
+                    <p>Agora, nesse Bootcamp, o jogo é outro. Serão 7 dias intensivos focados 100% em te entregar o plano prático que vai te levar do zero à programador contratado, home office, em até 6 meses.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Além disso, olha só o que te espera aqui do outro lado ao garantir o seu ingresso:</h2>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">▶️</div>
+                        <h3>7 Aulas práticas: do zero à programador</h3>
+                        <p>Durante o Bootcamp, você terá acesso a 7 dias de conteúdo te entregando o passo a passo do zero a programador de IA contratado em até 6 meses.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚙️</div>
+                        <h3>Projeto Real do Zero</h3>
+                        <p>Vamos construir juntos o seu primeiro projeto do zero: um app de Previsão do Tempo, integrando lógica de programação + dados em tempo real.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💻</div>
+                        <h3>Sorteio de um Notebook</h3>
+                        <p>Você terá a chance de sair do Bootcamp com um notebook zerado para começar a programar com o pé direito.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🏅</div>
+                        <h3>Certificado de Participação</h3>
+                        <p>Pra turbinar seu currículo e seu perfil no LinkedIn mostrando que você buscou uma formação prática, moderna e conectada com o que o mercado tá pedindo agora.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">▶️</div>
+                        <h3>Monitorias de tira-dúvidas</h3>
+                        <p>Durante os 7 dias, terá suporte da minha equipe tanto em uma sala fechada no Zoom como também no whatsapp.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🏆</div>
+                        <h3>Mentoria com especialista em transição de carreira</h3>
+                        <p>Você vai aprender a montar um currículo que se destaca, como se portar nas entrevistas, o que os recrutadores realmente analisam.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🤖</div>
+                        <h3>Suporte técnico as nossas IA's</h3>
+                        <p>Você vai poder contar com a ISA, Fernanda e Giovana, nossas assistentes de Inteligência Artificial, treinadas pra te ajudar.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💰</div>
+                        <h3>Estratégia "1.000 reais em 7 dias"</h3>
+                        <p>Você não precisa estar pronto, nem esperar meses pra começar a fazer dinheiro com programação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section class="schedule-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Confira o cronograma completo do evento:</h2>
+                </div>
+
+                <div class="schedule-grid">
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 DOMINGO - DIA 03/08</div>
+                        <div class="schedule-time">AO VIVO ÀS 20H</div>
+                        <h3>Do zero ao seu primeiro "sim" como programador ainda em 2025</h3>
+                        <p>Logo na primeira aula, eu vou te apresentar o checklist exato que qualquer pessoa pode seguir pra sair do zero e virar um programador de verdade.</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 SEGUNDA - DIA 04/08</div>
+                        <div class="schedule-time">LIBERADO ÀS 09H</div>
+                        <h3>Do básico ao visual profissional: estilizando seu projeto com CSS</h3>
+                        <p>Se o HTML é o esqueleto, o CSS é a pele. Você vai aprender a dar vida e beleza ao seu projeto.</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 TERÇA - DIA 05/08</div>
+                        <div class="schedule-time">LIBERADO ÀS 09H</div>
+                        <h3>Aula com Recrutadora: Seja Contratado!</h3>
+                        <p>Você vai aprender, com uma especialista em transição de carreira, como montar um currículo que realmente chama atenção.</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 QUARTA - DIA 06/08</div>
+                        <div class="schedule-time">LIBERADO ÀS 09H</div>
+                        <h3>JavaScript na prática: colocando seu projeto para funcionar</h3>
+                        <p>Aqui começa a mágica. Você vai entender os fundamentos do JavaScript, a linguagem que coloca seu site em movimento.</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 QUINTA - DIA 07/08</div>
+                        <div class="schedule-time">LIBERADO ÀS 09H</div>
+                        <h3>HTML do Zero: criando a estrutura do seu primeiro projeto</h3>
+                        <p>Chega de ver código e não entender nada. Nessa aula, você vai criar a base de qualquer site usando HTML.</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 SEXTA - DIA 08/08</div>
+                        <div class="schedule-time">LIBERADO ÀS 09H</div>
+                        <h3>MIL REAIS EM 7 dias como programação</h3>
+                        <p>O plano prático para fazer R$1.000 reais em 7 dias (mesmo sendo iniciante).</p>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-date">📌 SÁBADO - DIA 09/08</div>
+                        <div class="schedule-time">AO VIVO ÀS 20H</div>
+                        <h3>Como usar a IA para acelerar sua jornada</h3>
+                        <p>Na aula final, eu vou te mostrar como aplicar IA pra evoluir mais rápido, criar projetos melhores e se destacar nas vagas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Companies Section -->
+        <section class="companies-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Acredite, você está prestes a ter acesso ao mesmo método que já empregou centenas dos nossos alunos no mercado</h2>
+                    <p>E que fez essas grandes empresas disputarem por eles:</p>
+                </div>
+
+                <div class="companies-grid">
+                    <div class="company-logo">Santander</div>
+                    <div class="company-logo">BTG Pactual</div>
+                    <div class="company-logo">Toro Investimentos</div>
+                    <div class="company-logo">PI Investimentos</div>
+                    <div class="company-logo">Magazine Luiza</div>
+                    <div class="company-logo">Itaú</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Offer Section -->
+        <section id="offer" class="offer-section">
+            <div class="container">
+                <div class="offer-content">
+                    <h2>Eu não preciso te dizer aqui que esse ingresso está praticamente de graça, né?</h2>
+                    
+                    <div class="offer-recap">
+                        <h3>Recapitulando tudo o que você vai receber ao garantir o seu ingresso:</h3>
+                        
+                        <div class="offer-benefits">
+                            <div class="offer-benefit">✅ Bootcamp prático com aulas práticas</div>
+                            <div class="offer-benefit">✅ Criação de um projeto real, do zero, utilizando HTML, CSS, JS e IA</div>
+                            <div class="offer-benefit">✅ Todo o conteúdo em mais de +cadernos de aceleração</div>
+                            <div class="offer-benefit">✅ Suporte no Zoom e Whatsapp dos programadores DevClub</div>
+                            <div class="offer-benefit">✅ Suporte técnico das nossas IA's para acelerar o aprendizado</div>
+                            <div class="offer-benefit">✅ Mentoria com uma especialista em Transição de Carreira</div>
+                            <div class="offer-benefit">✅ Estratégia "R$1.000 reais em 7 dias"</div>
+                            <div class="offer-benefit">✅ Sorteio de um notebook</div>
+                            <div class="offer-benefit">✅ Garantia: "ou você aprende ou eu devolvo o seu dinheiro"</div>
+                        </div>
+                    </div>
+
+                    <div class="final-price">
+                        <div class="old-price-large">De R$147 por</div>
+                        <div class="current-price-large">R$ 17,90</div>
+                    </div>
+
+                    <button class="cta-button-large" onclick="purchaseAction()">
+                        <span>TÔ DENTRO! QUERO GARANTIR MEU INGRESSO</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guarantee Section -->
+        <section class="guarantee-section">
+            <div class="container">
+                <div class="guarantee-content">
+                    <h2>A minha proposta é simples:</h2>
+                    <div class="guarantee-text">
+                        Ou você sai do Bootcamp com resultado na mão ou eu devolvo o seu dinheiro!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Liberdade do home office, salários de R$4 a R$12 mil reais</h2>
+                    <p>É exatamente pra esse lugar que eu quero te levar.</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">"Saí do zero para desenvolvedor em 6 meses. Hoje trabalho home office ganhando R$8k por mês!"</div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JS</div>
+                            <div class="author-info">
+                                <strong>João Silva</strong>
+                                <span>Desenvolvedor Frontend</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">"O método do DevClub mudou minha vida. De vendedora a programadora em uma multinacional!"</div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MS</div>
+                            <div class="author-info">
+                                <strong>Maria Santos</strong>
+                                <span>Desenvolvedora Full Stack</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">"Nunca imaginei que seria possível. Hoje sou lead developer em uma startup!"</div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">CA</div>
+                            <div class="author-info">
+                                <strong>Carlos Almeida</strong>
+                                <span>Lead Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Professor Section -->
+        <section class="professor-section">
+            <div class="container">
+                <div class="professor-content">
+                    <div class="professor-info-detailed">
+                        <h2>Quem será seu professor?</h2>
+                        <div class="professor-details">
+                            <div class="professor-avatar-large">
+                                <div class="avatar-placeholder-large">RM</div>
+                            </div>
+                            <div class="professor-text-detailed">
+                                <h3>Rodolfo Mori</h3>
+                                <p>é um fundador do DevClub, uma escola online de programação com mais de dez mil alunos.</p>
+                                <p>De eletricista a Programador Sênior em empresas como Santander, BTG Pactual, PI Investimentos e Toro Investimentos, dedica-se a levar pessoas do absoluto zero em programação aos melhores empregos do mercado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Está na dúvida se a Imersão é pra você?</h2>
+                    <p>Sua resposta pode estar aqui...</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Por que esse evento custa tão barato?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Porque a missão aqui é simples: mostrar pra qualquer pessoa que sim, é possível sair do zero, criar projetos e começar a ganhar dinheiro com programação, mesmo que nunca tenha visto um código na vida. Esse valor é só pra garantir que você se comprometa.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Já estudo programação. Esse evento é só pra iniciante?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Não! Mesmo que você já tenha começado, o Bootcamp Programador em 7 dias vai te mostrar como organizar o que você aprendeu até aqui, transformar isso em projeto de verdade, usar IA pra acelerar seu processo e gerar resultado com o que você já sabe.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Não sei absolutamente nada de programação e sou ruim em exatas. Esse conteúdo é pra mim?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Com toda certeza! Esse intensivo foi criado pra quem está começando ou está travado sem saber por onde seguir. Você vai aprender direto da fonte, com projeto real, linguagem simples e passo a passo mastigado.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Vou poder tirar dúvida com o Rodolfo durante o Bootcamp?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim! Durante o Bootcamp, vai rolar as monitorias ao vivo no Zoom, uma sala exclusiva onde eu e meu time DevClub vamos nos revezar para tirar dúvidas de vocês durante os 7 dias e também pelo whatsapp.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h3>Vai ficar gravado? Posso assistir depois?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim, as aulas vão ficar disponíveis por 1 semana, enquanto durar o Bootcamp.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="final-cta-section">
+            <div class="container">
+                <div class="final-cta-content">
+                    <h2>Não encontrou sua dúvida aqui?</h2>
+                    <p>Então faz o seguinte, chame a minha equipe de suporte no whatsapp. Eles vão te ajudar no que for preciso para concluir sua inscrição.</p>
+                    
+                    <div class="cta-buttons">
+                        <button class="cta-button" onclick="purchaseAction()">
+                            GARANTIR MEU INGRESSO AGORA
+                        </button>
+                        <button class="support-button" onclick="contactSupport()">
+                            QUERO FALAR COM O SUPORTE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">DevClub</div>
+                <div class="footer-text">
+                    Transformando vidas através da programação
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="floating-whatsapp" onclick="contactSupport()">
+        <div class="whatsapp-icon">💬</div>
+        <div class="whatsapp-tooltip">Falar com Suporte</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 

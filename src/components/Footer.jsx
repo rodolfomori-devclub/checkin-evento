@@ -230,7 +230,7 @@ const Footer = ({ onOpenCheckin }) => {
             
             <div className="space-y-4">
               <motion.a
-                href="https://wa.me/5511999999999"
+                href="https://go.rodolfomori.com.br/suporte"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}

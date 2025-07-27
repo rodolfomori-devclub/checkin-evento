@@ -1,7 +1,23 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const ParticleSystem = () => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
+
+  useEffect(() => {
+    // Detect mobile and reduced motion preferences
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window)
+      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    }
+
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    
+    return () => window.removeEventListener('resize', checkDevice)
+  }, [])
+
   const codeSnippets = [
     'const career = "dev";',
     'function transform() {',
@@ -29,19 +45,25 @@ const ParticleSystem = () => {
   ]
 
   const particles = useMemo(() => {
+    // Don't render particles if reduced motion is preferred
+    if (reducedMotion) return []
+    
     // Safe check for window object
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
     
-    return Array.from({ length: 30 }, (_, i) => ({
+    // Reduce particles on mobile for better performance
+    const particleCount = isMobile ? 12 : 30
+    
+    return Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       code: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
       initialX: Math.random() * screenWidth,
-      delay: Math.random() * 20,
-      duration: 15 + Math.random() * 10,
+      delay: Math.random() * (isMobile ? 15 : 20),
+      duration: (isMobile ? 12 : 15) + Math.random() * 10,
       size: 0.7 + Math.random() * 0.6,
-      opacity: 0.3 + Math.random() * 0.4,
+      opacity: (isMobile ? 0.2 : 0.3) + Math.random() * 0.4,
     }))
-  }, [])
+  }, [isMobile, reducedMotion])
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -69,16 +91,18 @@ const ParticleSystem = () => {
           className="absolute font-mono text-primary select-none"
           style={{
             fontSize: `${0.6 + Math.random() * 0.4}rem`,
-            filter: `blur(${Math.random() * 2}px)`,
+            filter: isMobile ? 'none' : `blur(${Math.random() * 2}px)`, // Remove blur on mobile
             willChange: 'transform',
+            transform: 'translateZ(0)', // Force hardware acceleration
+            backfaceVisibility: 'hidden', // Optimize for animations
           }}
         >
           {particle.code}
         </motion.div>
       ))}
 
-      {/* Additional floating elements */}
-      {Array.from({ length: 10 }, (_, i) => {
+      {/* Additional floating elements - reduced on mobile */}
+      {!reducedMotion && Array.from({ length: isMobile ? 4 : 10 }, (_, i) => {
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
         return (
           <motion.div
@@ -91,27 +115,28 @@ const ParticleSystem = () => {
             animate={{
               x: Math.random() * screenWidth + Math.sin(Date.now() * 0.0002 + i) * 20,
               y: '100vh',
-              opacity: [0, 0.1, 0.1, 0],
+              opacity: [0, isMobile ? 0.08 : 0.1, isMobile ? 0.08 : 0.1, 0],
             }}
-          transition={{
-            duration: 12 + Math.random() * 8,
-            delay: Math.random() * 15,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute text-primary/20 select-none pointer-events-none"
-          style={{
-            fontSize: `${1 + Math.random() * 2}rem`,
-            willChange: 'transform',
-          }}
-        >
-          {['</', '/>', '{}', '()', '[]', '=>', '&&', '||', '++', '--'][Math.floor(Math.random() * 10)]}
-        </motion.div>
+            transition={{
+              duration: (isMobile ? 10 : 12) + Math.random() * 8,
+              delay: Math.random() * (isMobile ? 12 : 15),
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute text-primary/20 select-none pointer-events-none"
+            style={{
+              fontSize: `${isMobile ? 0.8 : 1 + Math.random() * 2}rem`,
+              willChange: 'transform',
+              transform: 'translateZ(0)', // Force hardware acceleration
+            }}
+          >
+            {['</', '/>', '{}', '()', '[]', '=>', '&&', '||', '++', '--'][Math.floor(Math.random() * 10)]}
+          </motion.div>
         )
       })}
 
-      {/* Geometric shapes */}
-      {Array.from({ length: 8 }, (_, i) => {
+      {/* Geometric shapes - reduced on mobile */}
+      {!reducedMotion && Array.from({ length: isMobile ? 3 : 8 }, (_, i) => {
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
         const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800
         return (
@@ -125,22 +150,23 @@ const ParticleSystem = () => {
             animate={{
               x: Math.random() * screenWidth + Math.sin(Date.now() * 0.0001 + i) * 15,
               y: screenHeight + 50,
-              opacity: [0, 0.1, 0.1, 0],
+              opacity: [0, isMobile ? 0.08 : 0.1, isMobile ? 0.08 : 0.1, 0],
             }}
-          transition={{
-            duration: 20 + Math.random() * 10,
-            delay: Math.random() * 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute border border-primary/20 select-none pointer-events-none"
-          style={{
-            width: `${20 + Math.random() * 30}px`,
-            height: `${20 + Math.random() * 30}px`,
-            borderRadius: Math.random() > 0.5 ? '50%' : '4px',
-            willChange: 'transform',
-          }}
-        />
+            transition={{
+              duration: (isMobile ? 15 : 20) + Math.random() * 10,
+              delay: Math.random() * (isMobile ? 15 : 20),
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute border border-primary/20 select-none pointer-events-none"
+            style={{
+              width: `${15 + Math.random() * (isMobile ? 20 : 30)}px`,
+              height: `${15 + Math.random() * (isMobile ? 20 : 30)}px`,
+              borderRadius: Math.random() > 0.5 ? '50%' : '4px',
+              willChange: 'transform',
+              transform: 'translateZ(0)', // Force hardware acceleration
+            }}
+          />
         )
       })}
     </div>

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import HeroSection from './components/HeroSection'
-import ScheduleSection from './components/ScheduleSection'
-import FirstClassSection from './components/FirstClassSection'
-import UrgencySection from './components/UrgencySection'
-import FAQSection from './components/FAQSection'
-import Footer from './components/Footer'
 import ParticleSystem from './components/ParticleSystem'
 import FloatingBlobs from './components/FloatingBlobs'
-import WhatsAppButton from './components/WhatsAppButton'
+
+// Lazy load non-critical components
+const ScheduleSection = lazy(() => import('./components/ScheduleSection'))
+const FirstClassSection = lazy(() => import('./components/FirstClassSection'))
+const UrgencySection = lazy(() => import('./components/UrgencySection'))
+const FAQSection = lazy(() => import('./components/FAQSection'))
+const Footer = lazy(() => import('./components/Footer'))
+const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'))
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -24,20 +26,37 @@ function App() {
   }, [])
 
   useEffect(() => {
-    // Add parallax effect on scroll
+    // Debounced parallax effect on scroll for better performance
+    let ticking = false
+    
     const handleScroll = () => {
-      const scrolled = window.pageYOffset
-      const rate = scrolled * -0.5
-      
-      const parallaxElements = document.querySelectorAll('.parallax')
-      parallaxElements.forEach(element => {
-        element.style.transform = `translateY(${rate}px)`
-      })
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset
+          const rate = scrolled * -0.5
+          
+          const parallaxElements = document.querySelectorAll('.parallax')
+          parallaxElements.forEach(element => {
+            element.style.transform = `translate3d(0, ${rate}px, 0)`
+          })
+          
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    // Use passive event listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Loading fallback component
+  const LoadingFallback = ({ height = "200px" }) => (
+    <div className="flex items-center justify-center" style={{ height }}>
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -59,23 +78,39 @@ function App() {
           isCheckinModalOpen={isCheckinModalOpen}
           setIsCheckinModalOpen={setIsCheckinModalOpen}
         />
-        <ScheduleSection />
-        <FirstClassSection />
-        <UrgencySection 
-          onOpenCheckin={() => setIsCheckinModalOpen(true)}
-        />
-        <FAQSection 
-          onOpenCheckin={() => setIsCheckinModalOpen(true)}
-        />
+        
+        <Suspense fallback={<LoadingFallback height="400px" />}>
+          <ScheduleSection />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback height="300px" />}>
+          <FirstClassSection />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback height="350px" />}>
+          <UrgencySection 
+            onOpenCheckin={() => setIsCheckinModalOpen(true)}
+          />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingFallback height="500px" />}>
+          <FAQSection 
+            onOpenCheckin={() => setIsCheckinModalOpen(true)}
+          />
+        </Suspense>
       </motion.main>
       
       {/* Footer */}
-      <Footer 
-        onOpenCheckin={() => setIsCheckinModalOpen(true)}
-      />
+      <Suspense fallback={<LoadingFallback height="400px" />}>
+        <Footer 
+          onOpenCheckin={() => setIsCheckinModalOpen(true)}
+        />
+      </Suspense>
       
       {/* Floating WhatsApp button */}
-      <WhatsAppButton />
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+      </Suspense>
     </div>
   )
 }

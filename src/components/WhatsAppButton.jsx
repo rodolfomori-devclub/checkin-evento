@@ -4,11 +4,8 @@ import { motion } from 'framer-motion'
 const WhatsAppButton = () => {
   const [isHovered, setIsHovered] = useState(false)
 
-  // Replace with actual WhatsApp number and message
-  const whatsappNumber = "5511999999999" // Format: country code + number without +
-  const message = "Olá! Preciso de ajuda com o check-in do Bootcamp Programador em 7 Dias 🚀"
-  
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+  // DevClub support WhatsApp link
+  const whatsappUrl = "https://go.rodolfomori.com.br/suporte"
 
   return (
     <>

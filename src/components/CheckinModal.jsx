@@ -36,7 +36,7 @@ const CheckinModal = ({ isOpen, onClose }) => {
     }
     
     // Move to next step if not the last one
-    if (stepIndex === currentStep && stepIndex < 4) {
+    if (stepIndex === currentStep && stepIndex < 5) {
       setTimeout(() => {
         setCurrentStep(stepIndex + 1)
       }, 500)
@@ -101,7 +101,7 @@ const CheckinModal = ({ isOpen, onClose }) => {
                 🚀 <span className="text-gradient">Check-in Interativo</span>
               </h2>
               <p className="text-text-muted text-lg">
-                Complete as 5 etapas para confirmar sua presença no bootcamp
+                Complete as 6 etapas para confirmar sua presença no bootcamp
               </p>
             </motion.div>
 
@@ -115,17 +115,17 @@ const CheckinModal = ({ isOpen, onClose }) => {
               <div className="flex justify-between items-center mb-4">
                 <span className="text-sm text-text-muted">Progresso</span>
                 <span className="text-sm text-primary font-semibold">
-                  {completedSteps.length}/5 concluídas
+                  {completedSteps.length}/6 concluídas
                 </span>
               </div>
               
               <div className="h-2 bg-secondary/50 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(completedSteps.length / 5) * 100}%` }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-primary to-primary-light"
-                />
+                              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${(completedSteps.length / 6) * 100}%` }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="h-full bg-gradient-to-r from-primary to-primary-light"
+              />
               </div>
             </motion.div>
 

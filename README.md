@@ -86,7 +86,7 @@ src/
 ### 📞 WhatsApp
 Edite o número do WhatsApp em `src/components/WhatsAppButton.jsx`:
 ```javascript
-const whatsappNumber = "5511999999999" // Seu número aqui
+const whatsappUrl = "https://go.rodolfomori.com.br/suporte" // Link oficial do suporte DevClub
 ```
 
 ### 🎬 Vídeo
