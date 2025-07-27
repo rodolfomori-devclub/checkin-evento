@@ -141,12 +141,12 @@ const FAQSection = ({ onOpenCheckin }) => {
             <span className="text-primary font-semibold text-lg">FAQ RÁPIDO</span>
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
             Respondemos suas{' '}
             <span className="text-gradient">principais dúvidas</span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-text-muted max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-text-muted max-w-4xl mx-auto leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
             Não encontrou sua pergunta? Nossa equipe está disponível no WhatsApp para te ajudar!
           </p>
         </motion.div>
@@ -183,7 +183,7 @@ const FAQSection = ({ onOpenCheckin }) => {
                       <div className="text-xs text-primary font-semibold uppercase tracking-wide mb-2">
                         {faq.category}
                       </div>
-                      <h3 className="text-lg md:text-xl font-semibold text-text-light leading-tight">
+                      <h3 className="text-lg md:text-xl font-semibold text-text-light leading-tight" style={{ fontFamily: 'var(--font-sans)' }}>
                         {faq.question}
                       </h3>
                     </div>
@@ -212,7 +212,7 @@ const FAQSection = ({ onOpenCheckin }) => {
                       <div className="px-6 pb-6">
                         <div className="pl-16 md:pl-20">
                           <div className="h-px bg-gradient-to-r from-primary/50 to-transparent mb-4" />
-                          <p className="text-text-muted leading-relaxed">
+                          <p className="text-text-muted leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                             {faq.answer}
                           </p>
                         </div>

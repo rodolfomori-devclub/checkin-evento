@@ -91,12 +91,12 @@ const Footer = ({ onOpenCheckin }) => {
         >
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="text-4xl">🚀</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-text-light">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-light" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
               DevClub
             </h2>
           </div>
           
-          <p className="text-xl text-text-muted max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-text-muted max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
             Transformando vidas através da programação. 
             <span className="text-primary font-semibold"> Seu futuro na tecnologia começa aqui.</span>
           </p>

@@ -50,10 +50,10 @@ const WhatsAppButton = () => {
         transition={{ duration: 0.2 }}
         className="fixed bottom-6 right-24 bg-background/90 backdrop-blur-sm border border-primary/30 rounded-lg px-4 py-2 pointer-events-none z-40"
       >
-        <div className="text-sm text-text-light font-medium whitespace-nowrap">
+        <div className="text-sm text-text-light font-medium whitespace-nowrap" style={{ fontFamily: 'var(--font-sans)' }}>
           💬 Precisa de ajuda?
         </div>
-        <div className="text-xs text-text-muted">
+        <div className="text-xs text-text-muted" style={{ fontFamily: 'var(--font-sans)' }}>
           Clique para falar conosco
         </div>
         

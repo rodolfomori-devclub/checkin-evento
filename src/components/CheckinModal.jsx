@@ -97,7 +97,7 @@ const CheckinModal = ({ isOpen, onClose }) => {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="text-center mb-8"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-text-light mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-text-light mb-2" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
                 🚀 <span className="text-gradient">Check-in Interativo</span>
               </h2>
               <p className="text-text-muted text-lg">

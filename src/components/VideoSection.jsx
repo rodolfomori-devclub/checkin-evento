@@ -56,8 +56,8 @@ const VideoSection = () => {
                 </svg>
               </div>
               <div className="space-y-2">
-                <h4 className="text-xl font-bold text-text-light">Mensagem do Rodolfo</h4>
-                <p className="text-text-muted text-sm max-w-xs">
+                <h4 className="text-xl font-bold text-text-light" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>Mensagem do Rodolfo</h4>
+                <p className="text-text-muted text-sm max-w-xs" style={{ fontFamily: 'var(--font-sans)' }}>
                   Clique para ver a mensagem exclusiva sobre o check-in
                 </p>
               </div>

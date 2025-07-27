@@ -12,7 +12,7 @@
     <!-- Preload critical fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Preload critical resources -->
     <link rel="dns-prefetch" href="https://www.youtube.com">
@@ -155,7 +155,8 @@
         border-radius: 10px;
         overflow: hidden;
         margin-bottom: 15px;
-        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
         border: 1px solid rgba(55, 227, 89, 0.2);
       }
 
@@ -250,6 +251,10 @@
         pointer-events: none;
       }
     </style>
+    <script type="module" crossorigin src="/assets/index-ee9f3f12.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-b1791c80.js">
+    <link rel="modulepreload" crossorigin href="/assets/animations-812b8ebb.js">
+    <link rel="stylesheet" href="/assets/index-fa447627.css">
   </head>
   <body>
     <!-- Loading Screen -->
@@ -290,7 +295,7 @@
 
     
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    
     
     <script>
       // Custom cursor removed - using default browser cursor

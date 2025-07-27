@@ -49,25 +49,6 @@ const ScheduleSection = () => {
       id: 2,
       day: 'TERÇA',
       date: 'DIA 3',
-      title: 'JavaScript: A Mágica Acontece',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
-      color: 'cyan',
-      gradient: 'from-cyan-500/20 to-teal-500/20',
-      border: 'border-cyan-500/30',
-      icon: '⚡',
-      topics: [
-        'Lógica de programação descomplicada',
-        'JavaScript na prática: fazendo seu projeto funcionar',
-        'Integração com APIs: buscando dados meteorológicos reais',
-        'Manipulação do DOM: interatividade profissional',
-        'Debugando código como um programador sênior'
-      ]
-    },
-    {
-      id: 3,
-      day: 'QUARTA',
-      date: 'DIA 4',
       title: 'CSS Completo: Deixando Tudo Bonito',
       time: 'Liberado às 9h + Monitoria às 20h',
       type: 'recorded',
@@ -84,9 +65,9 @@ const ScheduleSection = () => {
       ]
     },
     {
-      id: 4,
-      day: 'QUINTA',
-      date: 'DIA 5',
+      id: 3,
+      day: 'QUARTA',
+      date: 'DIA 4',
       title: 'Aula com Recrutadora: Seja Contratado!',
       time: 'Liberado às 9h + Monitoria às 20h',
       type: 'recorded',
@@ -100,6 +81,25 @@ const ScheduleSection = () => {
         'Como se preparar pras entrevistas técnicas',
         'O que responder nas perguntas mais difíceis',
         'Erros fatais que eliminam candidatos (e como evitar)'
+      ]
+    },
+    {
+      id: 4,
+      day: 'QUINTA',
+      date: 'DIA 5',
+      title: 'JavaScript: A Mágica Acontece',
+      time: 'Liberado às 9h + Monitoria às 20h',
+      type: 'recorded',
+      color: 'cyan',
+      gradient: 'from-cyan-500/20 to-teal-500/20',
+      border: 'border-cyan-500/30',
+      icon: '⚡',
+      topics: [
+        'Lógica de programação descomplicada',
+        'JavaScript na prática: fazendo seu projeto funcionar',
+        'Integração com APIs: buscando dados meteorológicos reais',
+        'Manipulação do DOM: interatividade profissional',
+        'Debugando código como um programador sênior'
       ]
     },
     {
@@ -194,11 +194,11 @@ const ScheduleSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
             📚 Cronograma Completo dos{' '}
             <span className="text-gradient">7 Dias</span>
           </h2>
-          <p className="text-xl md:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
             ⏰ São apenas <span className="text-primary font-semibold">7 dias que podem mudar</span> os próximos{' '}
             <span className="text-primary font-semibold">7 anos da sua vida</span>
           </p>
@@ -255,7 +255,7 @@ const ScheduleSection = () => {
                       <span className="text-sm text-text-muted">|</span>
                       <span className="text-sm font-semibold text-text-light">{day.date}</span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-text-light mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold text-text-light mb-2" style={{ fontFamily: 'var(--font-sans)' }}>
                       {day.title}
                     </h3>
                     <p className="text-sm md:text-base text-text-muted font-medium">

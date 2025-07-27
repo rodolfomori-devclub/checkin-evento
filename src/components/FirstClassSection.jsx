@@ -117,13 +117,13 @@ const FirstClassSection = () => {
             <span className="text-primary font-semibold text-lg">PRIMEIRA AULA IMPERDÍVEL</span>
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
             O que vai rolar na{' '}
             <span className="text-gradient">primeira aula</span>{' '}
             que você <span className="text-red-500">NÃO PODE</span> perder
           </h2>
           
-          <p className="text-xl md:text-2xl text-text-muted max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-text-muted max-w-4xl mx-auto leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
             No domingo, às <span className="text-primary font-semibold">20h</span>, eu vou te entregar:
           </p>
         </motion.div>
@@ -179,11 +179,11 @@ const FirstClassSection = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl md:text-2xl font-bold text-text-light mb-4 leading-tight">
+                <h3 className="text-xl md:text-2xl font-bold text-text-light mb-4 leading-tight" style={{ fontFamily: 'var(--font-sans)' }}>
                   {benefit.title}
                 </h3>
                 
-                <p className="text-text-muted leading-relaxed">
+                <p className="text-text-muted leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                   {benefit.description}
                 </p>
 

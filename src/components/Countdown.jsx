@@ -58,10 +58,10 @@ const Countdown = memo(({ targetDate }) => {
         transition={{ duration: 0.6 }}
         className="text-center"
       >
-        <h3 className="text-2xl md:text-3xl font-bold text-primary text-glow mb-2">
+        <h3 className="text-2xl md:text-3xl font-bold text-primary text-glow mb-2" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
           CONTAGEM REGRESSIVA
         </h3>
-        <p className="text-text-muted">
+        <p className="text-text-muted" style={{ fontFamily: 'var(--font-sans)' }}>
           Até domingo, 3 de agosto, às 20h
         </p>
       </motion.div>
@@ -128,6 +128,7 @@ const Countdown = memo(({ targetDate }) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
         className="text-center text-text-muted text-sm max-w-md mx-auto"
+        style={{ fontFamily: 'var(--font-sans)' }}
       >
         ⏰ Após esse prazo, não será possível participar do evento
       </motion.div>

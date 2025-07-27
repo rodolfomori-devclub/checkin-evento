@@ -33,11 +33,11 @@ const UrgencySection = ({ onOpenCheckin }) => {
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <h3 className="text-3xl md:text-4xl font-bold text-text-light mb-4">
+              <h3 className="text-3xl md:text-4xl font-bold text-text-light mb-4" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
                 ⚡ Não perca sua vaga por <span className="text-red-500">procrastinação</span>!
               </h3>
               
-              <p className="text-lg md:text-xl text-text-muted mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-text-muted mb-8 leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                 Enquanto você está lendo isso, outras pessoas estão fazendo check-in. 
                 <br className="hidden md:block" />
                 <span className="text-primary font-semibold">Garante sua vaga AGORA</span> antes que seja tarde!

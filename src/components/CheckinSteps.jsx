@@ -272,7 +272,7 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
       <div className="flex items-center gap-4">
         <div className="text-2xl">{step.icon}</div>
         <div className="flex-1 text-left">
-          <h3 className="font-semibold text-lg">{step.title}</h3>
+          <h3 className="font-semibold text-lg" style={{ fontFamily: 'var(--font-sans)' }}>{step.title}</h3>
           <p className="text-sm opacity-80 mb-2">{step.description}</p>
           <div className={`
             inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
@@ -525,7 +525,7 @@ const CheckinSteps = ({ currentStep, completedSteps, userData, onStepComplete, o
           className="mt-8 p-6 bg-gradient-to-r from-primary/20 to-primary-light/20 rounded-xl border border-primary/30 text-center"
         >
           <div className="text-4xl mb-4">🎉</div>
-          <h3 className="text-2xl font-bold text-primary mb-2">Parabéns!</h3>
+          <h3 className="text-2xl font-bold text-primary mb-2" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>Parabéns!</h3>
           <p className="text-text-light mb-6">
             Seu check-in foi realizado com sucesso! Você receberá um e-mail de confirmação em breve.
           </p>

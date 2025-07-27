@@ -37,7 +37,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
         transition={{ delay: 1, duration: 0.8 }}
         className="badge-float"
       >
-        <span className="text-glow">✨ 90% confirmados</span>
+        <span className="text-glow" style={{ fontFamily: 'var(--font-sans)' }}>✨ 90% confirmados</span>
       </motion.div>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -56,22 +56,25 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             className="inline-flex items-center gap-2 bg-red-500/20 backdrop-blur-sm px-4 py-2 rounded-full border border-red-500/30"
           >
             <span className="text-2xl animate-pulse">🚨</span>
-            <span className="text-red-400 font-medium">FALTA POUCO!</span>
+            <span className="text-red-400 font-medium" style={{ fontFamily: 'var(--font-sans)' }}>FALTA POUCO!</span>
           </motion.div>
 
           {/* Main Title with Typing Effect */}
           <div className="space-y-3 lg:space-y-4">
-            <TypingText
-              text="O Bootcamp Programador em 7 Dias está chegando"
-              className="text-3xl md:text-4xl lg:text-6xl font-bold text-text-light leading-tight"
-              delay={0.8}
-            />
+            <div style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
+              <TypingText
+                text="O Bootcamp Programador em 7 Dias está chegando"
+                className="text-3xl md:text-4xl lg:text-6xl font-bold text-text-light leading-tight"
+                delay={0.8}
+              />
+            </div>
             
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, duration: 0.8 }}
               className="text-lg md:text-xl lg:text-2xl text-text-muted"
+              style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}
             >
               Você precisa confirmar sua presença{' '}
               <span className="text-primary font-semibold text-glow">AGORA</span>
@@ -89,6 +92,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
               <button
                 onClick={handleStartCheckin}
                 className="btn-primary btn-pulse text-xl md:text-2xl px-12 py-6 font-bold uppercase tracking-wide w-full max-w-md"
+                style={{ fontFamily: 'var(--font-sans)' }}
               >
                 <span className="flex items-center justify-center gap-3">
                   <span>🚀</span>
@@ -114,6 +118,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.5, duration: 0.8 }}
             className="text-lg md:text-xl text-text-muted max-w-2xl"
+            style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}
           >
             <span className="hidden lg:inline">🎯 Confirme sua presença e garanta sua vaga no Bootcamp que já transformou a vida de{' '}
             <span className="text-primary font-semibold">milhares de pessoas</span></span>
@@ -127,7 +132,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             transition={{ delay: 4, duration: 0.8 }}
             className="bg-yellow-500/10 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 lg:p-4"
           >
-            <p className="text-yellow-400 font-medium flex items-start lg:items-center gap-2 text-sm lg:text-base">
+            <p className="text-yellow-400 font-medium flex items-start lg:items-center gap-2 text-sm lg:text-base" style={{ fontFamily: 'var(--font-sans)' }}>
               <span className="text-lg lg:text-xl flex-shrink-0">⚠️</span>
               <span>
                 <strong>ATENÇÃO:</strong> <span className="hidden lg:inline">O check-in é OBRIGATÓRIO e deve ser feito até</span><span className="lg:hidden">Check-in até</span> domingo, dia 3 de agosto, às 18h.
@@ -157,6 +162,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
               <button
                 onClick={handleStartCheckin}
                 className="btn-primary btn-pulse text-xl md:text-2xl px-12 py-6 font-bold uppercase tracking-wide w-auto"
+                style={{ fontFamily: 'var(--font-sans)' }}
               >
                 <span className="flex items-center justify-center gap-3">
                   <span>🚀</span>
