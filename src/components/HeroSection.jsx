@@ -9,10 +9,10 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
   const [showCTA, setShowCTA] = useState(false)
 
   useEffect(() => {
-    // Show CTA button after typing animation completes
+    // Show CTA button much faster
     const timer = setTimeout(() => {
       setShowCTA(true)
-    }, 4000)
+    }, 1500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -86,7 +86,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.8, duration: 0.6, ease: "easeOut" }}
+              transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
               className="flex justify-center lg:hidden"
             >
               <button
@@ -106,7 +106,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3, duration: 0.8 }}
+            transition={{ delay: 1, duration: 0.6 }}
             className="lg:scale-100 scale-90"
           >
             <Countdown targetDate="2025-08-03T20:00:00" />
@@ -116,7 +116,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.5, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
             className="text-lg md:text-xl text-text-muted max-w-2xl"
             style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}
           >
@@ -129,7 +129,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 4, duration: 0.8 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
             className="bg-yellow-500/10 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 lg:p-4"
           >
             <p className="text-yellow-400 font-medium flex items-start lg:items-center gap-2 text-sm lg:text-base" style={{ fontFamily: 'var(--font-sans)' }}>
@@ -156,7 +156,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
               className="hidden lg:flex lg:justify-end"
             >
               <button

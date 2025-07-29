@@ -27,7 +27,6 @@ const ParticleSystem = () => {
     'const bootcamp = new Experience();',
     'async function learn() {',
     'await bootcamp.start();',
-    'console.log("Ready!");',
     'class Programmer {',
     'constructor() {',
     'this.skills = [];',

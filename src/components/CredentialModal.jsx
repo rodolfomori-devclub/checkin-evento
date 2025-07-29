@@ -148,7 +148,6 @@ Vem comigo nessa jornada! ${window.location.origin}`
         alert('✅ Imagem copiada para a área de transferência!')
       }
     } catch (error) {
-      console.error('Erro ao copiar imagem:', error)
       // Fallback para download
       downloadImage()
     }

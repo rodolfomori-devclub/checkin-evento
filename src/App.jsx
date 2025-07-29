@@ -33,7 +33,7 @@ function App() {
     const isMobile = window.innerWidth <= 768;
     const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
     
-    const loadingTime = isMobile || isLowPerformance ? 1000 : 1500; // Faster on mobile/low-end devices
+    const loadingTime = isMobile || isLowPerformance ? 300 : 500; // Much faster loading
     
     const timer = setTimeout(() => {
       setIsLoaded(true)

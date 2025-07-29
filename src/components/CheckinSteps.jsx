@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CredentialGenerator from './CredentialGenerator'
 import CredentialModal from './CredentialModal'
 
+
 // Componente memoizado para o input do nome
 const NameInput = memo(({ value, onChange, placeholder }) => (
   <input
@@ -17,15 +18,15 @@ const NameInput = memo(({ value, onChange, placeholder }) => (
 
 // Componente memoizado para checkbox
 const Checkbox = memo(({ id, checked, onChange, label, className = "" }) => (
-  <div className={`flex items-center gap-3 p-3 bg-white/5 rounded-lg ${className}`}>
+  <div className={`flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors ${className}`}>
     <input
       type="checkbox"
       id={id}
       checked={checked}
       onChange={onChange}
-      className="w-5 h-5 text-primary bg-transparent border-2 border-primary/30 rounded focus:ring-primary/50 focus:ring-2"
+      className="w-5 h-5 text-primary bg-transparent border-2 border-primary/30 rounded focus:ring-primary/50 focus:ring-2 cursor-pointer"
     />
-    <label htmlFor={id} className="text-text-light text-sm cursor-pointer">
+    <label htmlFor={id} className="text-text-light text-sm cursor-pointer flex-1">
       {label}
     </label>
   </div>
@@ -85,21 +86,28 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       oscillator.start(audioContext.currentTime)
       oscillator.stop(audioContext.currentTime + 0.2)
     } catch (error) {
-      console.log('Audio not supported')
+      // Audio not supported
     }
   }, [])
 
   // Estados para os passos de venda
   const [recordingOffer, setRecordingOffer] = useState(null)
-  const [codeOffer, setCodeOffer] = useState(null)
+
   const [recordingCheckboxes, setRecordingCheckboxes] = useState({
     noThanks: false,
     alreadyHave: false
   })
+
+  // Estados para o código completo
+  const [codeOffer, setCodeOffer] = useState(null)
+
   const [codeCheckboxes, setCodeCheckboxes] = useState({
     noThanks: false,
     alreadyHave: false
   })
+
+
+
   const [showTimer, setShowTimer] = useState(false)
   const [timerCount, setTimerCount] = useState(3)
 
@@ -118,6 +126,8 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       setTimerCount(3)
     }
   }, [showTimer, timerCount])
+
+
 
   const steps = useMemo(() => [
     {
@@ -177,10 +187,10 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
     {
       id: 6,
       icon: '💻',
-      title: 'Código Completo da Aplicação',
-      description: 'Receba o código completo da aplicação desenvolvida',
+      title: 'Código Completo do Projeto',
+      description: 'Tenha acesso ao código completo da aplicação',
       buttonText: 'Quero o código completo',
-      color: 'bg-yellow-500',
+      color: 'bg-emerald-500',
       type: 'code'
     },
     {
@@ -221,7 +231,6 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
 
   const generateCredential = useCallback(() => {
     setShouldGenerateCredential(true)
-    console.log('✅ shouldGenerateCredential definido como true')
   }, [])
 
   const handleRecordingOffer = useCallback((response) => {
@@ -236,10 +245,10 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         });
       }
       window.open('https://pay.assiny.com.br/38ca3c/node/977065', '_blank')
+      // Não completa automaticamente, mostra os checkboxes
     }
-    onStepComplete(5)
-    playSuccessSound()
-  }, [onStepComplete, playSuccessSound])
+    // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
+  }, [])
 
   const handleCodeOffer = useCallback((response) => {
     setCodeOffer(response)
@@ -252,14 +261,15 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           currency: 'BRL'
         });
       }
-      window.open('https://pay.assiny.com.br/de8237/node/242143', '_blank')
+      window.open('https://pay.assiny.com.br/38ca3c/node/977066', '_blank')
+      // Não completa automaticamente, mostra os checkboxes
     }
-    onStepComplete(6)
-    playSuccessSound()
-  }, [onStepComplete, playSuccessSound])
+    // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
+  }, [])
+
+
 
   const onCredentialGenerated = useCallback((imageData, generatedTicketId) => {
-    console.log('🎉 Credencial recebida!', { generatedTicketId, imageSize: imageData.length })
     setCredentialImage(imageData)
     setTicketId(generatedTicketId)
     setIsCredentialModalOpen(true)
@@ -290,7 +300,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       return completedSteps.includes(stepIndex - 1)
     }
     if (stepIndex === 7) {
-      return completedSteps.includes(5) && completedSteps.includes(6)
+      return completedSteps.includes(6)
     }
     return false
   }, [completedSteps])
@@ -534,13 +544,34 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
             <h4 className="text-lg font-semibold text-text-light mb-2">
               💬 Entrar no WhatsApp
             </h4>
-            <p className="text-text-muted text-sm">
-              O grupo do WhatsApp foi aberto em uma nova aba
+            <p className="text-text-muted text-sm mb-4">
+              Já entrou no Grupo do Evento ?
             </p>
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4">
-              <p className="text-text-light text-sm">
-                <strong>Próximo passo:</strong> Configure o Zoom para participar das aulas ao vivo
-              </p>
+            
+            <motion.a
+              href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg px-8 py-4 rounded-xl transition-all duration-300 group"
+            >
+              <span className="text-2xl group-hover:scale-110 transition-transform duration-300">💬</span>
+              <span>Entrar no Grupo do Evento</span>
+            </motion.a>
+
+            <div className="mt-6">
+              <Checkbox
+                id="whatsapp-checkbox"
+                checked={false}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    onStepComplete(2)
+                    playSuccessSound()
+                  }
+                }}
+                label="Já entrei no grupo, próximo passo"
+              />
             </div>
           </div>
         </div>
@@ -691,7 +722,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-500/30 rounded-xl p-6">
+              <div className="bg-gradient-to-r from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                 <div className="text-center space-y-4">
                   <div className="text-4xl">🎥</div>
                   <h5 className="text-xl font-bold text-text-light">O que você vai receber:</h5>
@@ -713,7 +744,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                   ✅ SIM, quero a gravação
                 </ActionButton>
                 <ActionButton
-                  onClick={() => setRecordingOffer('no')}
+                  onClick={() => handleRecordingOffer('no')}
                   className="bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors duration-200"
                 >
                   ❌ NÃO, obrigado
@@ -722,7 +753,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
             </div>
           </div>
         )
-      } else if (recordingOffer === 'no') {
+      } else if (recordingOffer === 'no' || recordingOffer === 'yes') {
         return (
           <div className="mb-4 p-6 glass-card">
             <div className="space-y-4">
@@ -730,28 +761,112 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 <p className="text-text-muted text-sm mb-4">
                   Confirme sua decisão:
                 </p>
+                {recordingOffer === 'yes' && (
+                  <div className="mb-4">
+                    <a
+                      href="https://pay.assiny.com.br/38ca3c/node/977065"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
+                    >
+                      💳 Quero a gravação (ir para checkout)
+                    </a>
+                  </div>
+                )}
               </div>
-              <div className="space-y-3">
-                <Checkbox
-                  id="recording-no-thanks"
-                  checked={recordingCheckboxes.noThanks}
-                  onChange={(e) => setRecordingCheckboxes(prev => ({
-                    ...prev,
-                    noThanks: e.target.checked
-                  }))}
-                  label="Confirmo que quero fazer o check-in e NÃO quero aproveitar a oportunidade de ter a gravação vitalícia"
-                />
-                <Checkbox
-                  id="recording-already-have"
-                  checked={recordingCheckboxes.alreadyHave}
-                  onChange={(e) => setRecordingCheckboxes(prev => ({
-                    ...prev,
-                    alreadyHave: e.target.checked
-                  }))}
-                  label="SIM (Já garanti a gravação vitalícia)"
-                />
+              <div className="space-y-3" style={{ position: 'relative', zIndex: 100 }}>
+                <div 
+                  className={`p-4 rounded-lg transition-all duration-200 cursor-pointer border-2 ${
+                    recordingCheckboxes.noThanks 
+                      ? 'bg-blue-500/20 border-blue-500/50' 
+                      : 'bg-white/10 border-white/20 hover:bg-white/20'
+                  }`}
+                  style={{ 
+                    minHeight: '60px', 
+                    userSelect: 'none',
+                    position: 'relative',
+                    zIndex: 101
+                  }}
+                  onClick={() => {
+                    setRecordingCheckboxes({
+                      noThanks: true,
+                      alreadyHave: false
+                    })
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="recording-option"
+                      checked={recordingCheckboxes.noThanks}
+                      onChange={() => {
+                        setRecordingCheckboxes({
+                          noThanks: true,
+                          alreadyHave: false
+                        })
+                      }}
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        accentColor: '#3B82F6',
+                        pointerEvents: 'auto'
+                      }}
+                      className="cursor-pointer"
+                    />
+                    <span className="text-text-light text-sm flex-1 leading-relaxed">
+                      Confirmo que quero fazer o check-in e NÃO quero aproveitar a oportunidade de ter a gravação vitalícia
+                    </span>
+                  </div>
+                </div>
+                
+                <div 
+                  className={`p-4 rounded-lg transition-all duration-200 cursor-pointer border-2 ${
+                    recordingCheckboxes.alreadyHave 
+                      ? 'bg-blue-500/20 border-blue-500/50' 
+                      : 'bg-white/10 border-white/20 hover:bg-white/20'
+                  }`}
+                  style={{ 
+                    minHeight: '60px', 
+                    userSelect: 'none',
+                    position: 'relative',
+                    zIndex: 101
+                  }}
+                  onClick={() => {
+                    setRecordingCheckboxes({
+                      noThanks: false,
+                      alreadyHave: true
+                    })
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="recording-option"
+                      checked={recordingCheckboxes.alreadyHave}
+                      onChange={() => {
+                        setRecordingCheckboxes({
+                          noThanks: false,
+                          alreadyHave: true
+                        })
+                      }}
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        accentColor: '#3B82F6',
+                        pointerEvents: 'auto'
+                      }}
+                      className="cursor-pointer"
+                    />
+                    <span className="text-text-light text-sm flex-1 leading-relaxed">
+                      SIM (Já garanti a gravação vitalícia)
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
+              <div className="text-center space-y-3">
+                
                 <ActionButton
                   onClick={() => {
                     if (recordingCheckboxes.noThanks || recordingCheckboxes.alreadyHave) {
@@ -761,7 +876,12 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                       alert('Por favor, selecione uma das opções')
                     }
                   }}
-                  className="bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-colors duration-200"
+                  disabled={!recordingCheckboxes.noThanks && !recordingCheckboxes.alreadyHave}
+                  className={`font-semibold rounded-lg transition-colors duration-200 ${
+                    recordingCheckboxes.noThanks || recordingCheckboxes.alreadyHave
+                      ? 'bg-primary hover:bg-primary-light text-white cursor-pointer'
+                      : 'bg-gray-500/50 text-gray-400 cursor-not-allowed'
+                  }`}
                 >
                   Continuar
                 </ActionButton>
@@ -779,23 +899,23 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
             <div className="space-y-6">
               <div className="text-center">
                 <h4 className="text-lg font-semibold text-text-light mb-2">
-                  💻 Código Completo da Aplicação
+                  💻 Código Completo do Projeto
                 </h4>
                 <p className="text-text-muted text-sm">
-                  Receba o código completo da aplicação desenvolvida durante o bootcamp
+                  Tenha acesso ao código completo da aplicação desenvolvida
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border border-yellow-500/30 rounded-xl p-6">
+              <div className="bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-xl p-6">
                 <div className="text-center space-y-4">
                   <div className="text-4xl">💻</div>
                   <h5 className="text-xl font-bold text-text-light">O que você vai receber:</h5>
                   <ul className="text-text-light text-sm space-y-2">
                     <li>✅ Código completo da aplicação</li>
-                    <li>✅ Arquivos organizados e comentados</li>
+                    <li>✅ Todos os arquivos do projeto</li>
+                    <li>✅ Documentação detalhada</li>
                     <li>✅ Instruções de instalação</li>
-                    <li>✅ Documentação completa</li>
-                    <li>✅ Possibilidade de personalizar e expandir</li>
+                    <li>✅ Acesso vitalício ao código</li>
                   </ul>
                 </div>
               </div>
@@ -803,12 +923,12 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
               <div className="flex gap-4 justify-center">
                 <ActionButton
                   onClick={() => handleCodeOffer('yes')}
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg transition-colors duration-200"
                 >
                   ✅ SIM, quero o código
                 </ActionButton>
                 <ActionButton
-                  onClick={() => setCodeOffer('no')}
+                  onClick={() => handleCodeOffer('no')}
                   className="bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors duration-200"
                 >
                   ❌ NÃO, obrigado
@@ -817,7 +937,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
             </div>
           </div>
         )
-      } else if (codeOffer === 'no') {
+      } else if (codeOffer === 'no' || codeOffer === 'yes') {
         return (
           <div className="mb-4 p-6 glass-card">
             <div className="space-y-4">
@@ -825,28 +945,112 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 <p className="text-text-muted text-sm mb-4">
                   Confirme sua decisão:
                 </p>
+                {codeOffer === 'yes' && (
+                  <div className="mb-4">
+                    <a
+                      href="https://pay.assiny.com.br/38ca3c/node/977066"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
+                    >
+                      💳 Quero o código (ir para checkout)
+                    </a>
+                  </div>
+                )}
               </div>
-              <div className="space-y-3">
-                <Checkbox
-                  id="code-no-thanks"
-                  checked={codeCheckboxes.noThanks}
-                  onChange={(e) => setCodeCheckboxes(prev => ({
-                    ...prev,
-                    noThanks: e.target.checked
-                  }))}
-                  label="Confirmo que quero fazer o check-in e NÃO quero aproveitar a oportunidade de ter o código completo"
-                />
-                <Checkbox
-                  id="code-already-have"
-                  checked={codeCheckboxes.alreadyHave}
-                  onChange={(e) => setCodeCheckboxes(prev => ({
-                    ...prev,
-                    alreadyHave: e.target.checked
-                  }))}
-                  label="SIM (Já garanti o código completo)"
-                />
+              <div className="space-y-3" style={{ position: 'relative', zIndex: 100 }}>
+                <div 
+                  className={`p-4 rounded-lg transition-all duration-200 cursor-pointer border-2 ${
+                    codeCheckboxes.noThanks 
+                      ? 'bg-blue-500/20 border-blue-500/50' 
+                      : 'bg-white/10 border-white/20 hover:bg-white/20'
+                  }`}
+                  style={{ 
+                    minHeight: '60px', 
+                    userSelect: 'none',
+                    position: 'relative',
+                    zIndex: 101
+                  }}
+                  onClick={() => {
+                    setCodeCheckboxes({
+                      noThanks: true,
+                      alreadyHave: false
+                    })
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="code-option"
+                      checked={codeCheckboxes.noThanks}
+                      onChange={() => {
+                        setCodeCheckboxes({
+                          noThanks: true,
+                          alreadyHave: false
+                        })
+                      }}
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        accentColor: '#3B82F6',
+                        pointerEvents: 'auto'
+                      }}
+                      className="cursor-pointer"
+                    />
+                    <span className="text-text-light text-sm flex-1 leading-relaxed">
+                      Confirmo que quero fazer o check-in e NÃO quero aproveitar a oportunidade de ter o código completo
+                    </span>
+                  </div>
+                </div>
+                
+                <div 
+                  className={`p-4 rounded-lg transition-all duration-200 cursor-pointer border-2 ${
+                    codeCheckboxes.alreadyHave 
+                      ? 'bg-blue-500/20 border-blue-500/50' 
+                      : 'bg-white/10 border-white/20 hover:bg-white/20'
+                  }`}
+                  style={{ 
+                    minHeight: '60px', 
+                    userSelect: 'none',
+                    position: 'relative',
+                    zIndex: 101
+                  }}
+                  onClick={() => {
+                    setCodeCheckboxes({
+                      noThanks: false,
+                      alreadyHave: true
+                    })
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="code-option"
+                      checked={codeCheckboxes.alreadyHave}
+                      onChange={() => {
+                        setCodeCheckboxes({
+                          noThanks: false,
+                          alreadyHave: true
+                        })
+                      }}
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        accentColor: '#3B82F6',
+                        pointerEvents: 'auto'
+                      }}
+                      className="cursor-pointer"
+                    />
+                    <span className="text-text-light text-sm flex-1 leading-relaxed">
+                      SIM (Já garanti o código completo)
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
+              <div className="text-center space-y-3">
+                
                 <ActionButton
                   onClick={() => {
                     if (codeCheckboxes.noThanks || codeCheckboxes.alreadyHave) {
@@ -856,7 +1060,12 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                       alert('Por favor, selecione uma das opções')
                     }
                   }}
-                  className="bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-colors duration-200"
+                  disabled={!codeCheckboxes.noThanks && !codeCheckboxes.alreadyHave}
+                  className={`font-semibold rounded-lg transition-colors duration-200 ${
+                    codeCheckboxes.noThanks || codeCheckboxes.alreadyHave
+                      ? 'bg-primary hover:bg-primary-light text-white cursor-pointer'
+                      : 'bg-gray-500/50 text-gray-400 cursor-not-allowed'
+                  }`}
                 >
                   Continuar
                 </ActionButton>
@@ -941,7 +1150,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
     }
 
     // Final Success State
-    if (completedSteps.length === 8) {
+    if (completedSteps.length === 9) {
       return (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -963,7 +1172,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       )
     }
     return null;
-  }, [currentStep, steps, formData.name, calendarCheckbox, isStepCompleted, handleNameChange, onStepComplete, playSuccessSound, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, userPhoto, handleFileUpload, generateCredential, handleRecordingOffer, setRecordingOffer, recordingCheckboxes, setRecordingCheckboxes, onClose, showTimer, timerCount])
+  }, [currentStep, steps, formData.name, calendarCheckbox, isStepCompleted, handleNameChange, onStepComplete, playSuccessSound, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, userPhoto, handleFileUpload, generateCredential, handleRecordingOffer, handleCodeOffer, setRecordingOffer, setCodeOffer, recordingCheckboxes, setRecordingCheckboxes, codeCheckboxes, setCodeCheckboxes, onClose, showTimer, timerCount])
 
   return (
     <div className="space-y-4 md:space-y-6">

@@ -9,14 +9,11 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
   }
 
   const generateCredential = async () => {
-    console.log('🎫 Iniciando geração da credencial...')
     const canvas = canvasRef.current
     if (!canvas) {
-      console.error('❌ Canvas não encontrado')
       return
     }
     const ctx = canvas.getContext('2d')
-    console.log('✅ Canvas e contexto obtidos')
     
     // Definir dimensões
     canvas.width = 800
@@ -84,12 +81,10 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
     // Foto (se fornecida)
     if (photo) {
       try {
-        console.log('📸 Carregando foto...')
         const img = new Image()
         img.crossOrigin = 'anonymous'
         
         img.onload = () => {
-          console.log('✅ Foto carregada com sucesso')
           // Desenhar foto circular mantendo proporção
           const photoX = cardX + cardWidth - 180
           const photoY = cardY + 40
@@ -137,18 +132,15 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
           finishCredential()
         }
         
-        img.onerror = (error) => {
-          console.error('❌ Erro ao carregar foto:', error)
+        img.onerror = () => {
           finishCredential()
         }
         
         img.src = photo
       } catch (error) {
-        console.error('❌ Erro ao processar foto:', error)
         finishCredential()
       }
     } else {
-      console.log('👤 Gerando com avatar placeholder')
       // Avatar placeholder
       const avatarX = cardX + cardWidth - 180
       const avatarY = cardY + 40
@@ -175,7 +167,6 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
     }
 
     function finishCredential() {
-      console.log('🎨 Finalizando credencial...')
       try {
         // Nome da pessoa
         ctx.textAlign = 'left'
@@ -216,22 +207,17 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
         
         // Converter para data URL e chamar callback
         const dataURL = canvas.toDataURL('image/png', 1.0)
-        console.log('✅ Credencial gerada com sucesso!', { ticketId, dataURL: dataURL.substring(0, 50) + '...' })
         if (onCredentialGenerated) {
           onCredentialGenerated(dataURL, ticketId)
-        } else {
-          console.error('❌ Callback onCredentialGenerated não definido')
         }
       } catch (error) {
-        console.error('❌ Erro ao finalizar credencial:', error)
+        // Error handling
       }
     }
   }
 
   useEffect(() => {
-    console.log('🔄 CredentialGenerator useEffect:', { shouldGenerate, name, photo: !!photo })
     if (shouldGenerate && name) {
-      console.log('🚀 Triggering credential generation...')
       generateCredential()
     }
   }, [shouldGenerate, name, photo])
