@@ -12,7 +12,7 @@
     <!-- Preload critical fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Preload critical resources -->
     <link rel="dns-prefetch" href="https://www.youtube.com">
@@ -21,6 +21,21 @@
     <!-- Performance optimizations -->
     <meta name="theme-color" content="#020A13">
     <meta name="color-scheme" content="dark">
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '241752320666130');
+    fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
     
     <title>Check-in | Bootcamp Programador em 7 Dias</title>
     
@@ -34,6 +49,7 @@
       
       html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
       }
       
       body {
@@ -41,6 +57,91 @@
         background-color: #020A13;
         color: #F8F9FA;
         overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Performance optimizations */
+      .low-performance * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      
+      .mobile-optimized .floating-blobs {
+        opacity: 0.2;
+      }
+      
+      .mobile-optimized .particle {
+        animation-duration: 6s !important;
+      }
+      
+      .mobile-optimized .blob {
+        animation-duration: 8s !important;
+      }
+      
+      /* Hardware acceleration for animations */
+      .hero-section,
+      .cta-button,
+      .benefit-card,
+      .step-item,
+      .testimonial-card,
+      .schedule-item,
+      .floating-blobs,
+      .particle {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+      
+      /* Optimize loading screen */
+      .loading-screen {
+        will-change: opacity, transform;
+      }
+      
+      /* Optimize scroll performance */
+      .container {
+        will-change: transform;
+        transform: translateZ(0);
+      }
+      
+      /* Mobile modal optimizations */
+      @media (max-width: 768px) {
+        .modal-fullscreen-mobile {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          max-width: none !important;
+          max-height: none !important;
+          margin: 0 !important;
+          border-radius: 0 !important;
+        }
+        
+        .modal-fullscreen-mobile .glass-card {
+          border-radius: 0 !important;
+          height: 100vh !important;
+          overflow-y: auto !important;
+        }
+      }
+      
+      /* Reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        
+        .floating-blobs,
+        .particle {
+          display: none;
+        }
       }
       
       /* Loading screen */
@@ -154,10 +255,25 @@
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         overflow: hidden;
-        margin-bottom: 15px;
+        margin: 0 auto 15px auto;
         -webkit-backdrop-filter: blur(10px);
                 backdrop-filter: blur(10px);
         border: 1px solid rgba(55, 227, 89, 0.2);
+      }
+
+      /* Responsive progress bar */
+      @media (max-width: 768px) {
+        .progress-container {
+          width: 280px;
+          height: 6px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .progress-container {
+          width: 260px;
+          height: 6px;
+        }
       }
 
       .progress-bar {
@@ -251,12 +367,17 @@
         pointer-events: none;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-ee9f3f12.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/vendor-b1791c80.js">
-    <link rel="modulepreload" crossorigin href="/assets/animations-812b8ebb.js">
-    <link rel="stylesheet" href="/assets/index-fa447627.css">
+    <script type="module" crossorigin src="/assets/index-87f9d038.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-79b9f383.js">
+    <link rel="modulepreload" crossorigin href="/assets/animations-f7009316.js">
+    <link rel="stylesheet" href="/assets/index-b45fe991.css">
   </head>
   <body>
+    <!-- Facebook Pixel Noscript -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=241752320666130&ev=PageView&noscript=1"
+    /></noscript>
+    
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
       <!-- Floating particles -->
@@ -298,14 +419,17 @@
     
     
     <script>
-      // Custom cursor removed - using default browser cursor
-      
-      // Enhanced loading screen with optimized progress simulation
+      // Performance optimizations for check-in page
       let currentProgress = 0;
       const progressBar = document.getElementById('progress-bar');
       const progressText = document.getElementById('progress-text');
       const loadingSteps = document.getElementById('loading-steps');
       let progressRAF;
+      
+      // Performance detection
+      const isMobile = window.innerWidth <= 768;
+      const hasReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
       
       const steps = [
          '🔧 Carregando recursos do DevClub...',
@@ -319,8 +443,8 @@
       let stepIndex = 0;
       
       function updateProgress() {
-        // Faster progress simulation for better perceived performance
-        const increment = Math.random() * 20 + 10; // 10-30% increments
+        // Optimized progress simulation
+        const increment = isMobile ? Math.random() * 25 + 15 : Math.random() * 20 + 10; // Faster on mobile
         currentProgress = Math.min(currentProgress + increment, 100);
         
         // Use RAF for smooth updates
@@ -337,8 +461,9 @@
         }
         
         if (currentProgress < 100) {
-          // Faster intervals for better UX
-          setTimeout(updateProgress, Math.random() * 100 + 50); // 50-150ms intervals
+          // Optimized intervals
+          const interval = isMobile ? Math.random() * 80 + 40 : Math.random() * 100 + 50; // Faster on mobile
+          setTimeout(updateProgress, interval);
         } else {
            // Loading complete
            setTimeout(() => {
@@ -356,27 +481,74 @@
                    loading.classList.add('fade-out');
                    setTimeout(() => {
                      if (loading.parentNode) loading.remove()
-                   }, 800);
+                   }, 600); // Reduced from 800ms
                  }
-               }, 600);
-             }, 400);
-           }, 200);
+               }, 400); // Reduced from 600ms
+             }, 300); // Reduced from 400ms
+           }, 150); // Reduced from 200ms
          }
       }
       
-      // Start progress simulation when DOM is ready - faster for better UX
+      // Performance optimizations
+      function setupPerformanceOptimizations() {
+        // Reduce animations for low performance devices
+        if (isLowPerformance || hasReducedMotion) {
+          document.body.classList.add('low-performance');
+        }
+        
+        // Mobile optimizations
+        if (isMobile) {
+          document.body.classList.add('mobile-optimized');
+        }
+        
+        // Optimize scroll performance
+        let ticking = false;
+        const handleScroll = () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              // Handle scroll optimizations if needed
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Visibility change handler for performance
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            document.body.style.animationPlayState = 'paused';
+          } else {
+            document.body.style.animationPlayState = 'running';
+          }
+        });
+      }
+      
+      // Start optimizations when DOM is ready
       document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(updateProgress, 200);
+        setupPerformanceOptimizations();
+        setTimeout(updateProgress, 150); // Reduced from 200ms
       });
       
-      // Fallback: ensure loading screen disappears even if something goes wrong
+      // Fallback: ensure loading screen disappears
       window.addEventListener('load', () => {
         setTimeout(() => {
           if (document.getElementById('loading-screen')) {
             currentProgress = 100;
             updateProgress();
           }
-        }, 2000); // Maximum 2 seconds for better UX
+        }, 1500); // Reduced from 2000ms for better UX
+      });
+      
+      // Error handling
+      window.addEventListener('error', (e) => {
+        console.error('JavaScript error:', e.error);
+        // Ensure loading screen disappears on error
+        if (document.getElementById('loading-screen')) {
+          currentProgress = 100;
+          updateProgress();
+        }
       });
     </script>
   </body>
