@@ -250,7 +250,7 @@ const FAQSection = ({ onOpenCheckin }) => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <motion.a
-                  href="https://go.rodolfomori.com.br/suporte"
+                  href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}

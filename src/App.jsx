@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import HeroSection from './components/HeroSection'
 import ParticleSystem from './components/ParticleSystem'
 import FloatingBlobs from './components/FloatingBlobs'
+import CheckinModal from './components/CheckinModal'
 
 // Lazy load non-critical components
 const ScheduleSection = lazy(() => import('./components/ScheduleSection'))
@@ -16,18 +17,41 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isCheckinModalOpen, setIsCheckinModalOpen] = useState(false)
 
+  const handleOpenCheckin = () => {
+    // Facebook Pixel - Track check-in modal open
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'CustomEvent', {
+        event_name: 'CheckinModalOpen',
+        content_name: 'Check-in Bootcamp Programador em 7 Dias'
+      });
+    }
+    setIsCheckinModalOpen(true)
+  }
+
   useEffect(() => {
-    // Simulate loading time and then set loaded
+    // Optimized loading time based on device performance
+    const isMobile = window.innerWidth <= 768;
+    const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
+    
+    const loadingTime = isMobile || isLowPerformance ? 1000 : 1500; // Faster on mobile/low-end devices
+    
     const timer = setTimeout(() => {
       setIsLoaded(true)
-    }, 1500)
+    }, loadingTime)
 
     return () => clearTimeout(timer)
   }, [])
 
   useEffect(() => {
-    // Debounced parallax effect on scroll for better performance
+    // Optimized parallax effect on scroll for better performance
     let ticking = false
+    const isMobile = window.innerWidth <= 768;
+    const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
+    
+    // Disable parallax on mobile/low performance devices
+    if (isMobile || isLowPerformance) {
+      return;
+    }
     
     const handleScroll = () => {
       if (!ticking) {
@@ -76,7 +100,7 @@ function App() {
       >
         <HeroSection 
           isCheckinModalOpen={isCheckinModalOpen}
-          setIsCheckinModalOpen={setIsCheckinModalOpen}
+          setIsCheckinModalOpen={handleOpenCheckin}
         />
         
         <Suspense fallback={<LoadingFallback height="400px" />}>
@@ -89,13 +113,13 @@ function App() {
         
         <Suspense fallback={<LoadingFallback height="350px" />}>
           <UrgencySection 
-            onOpenCheckin={() => setIsCheckinModalOpen(true)}
+            onOpenCheckin={handleOpenCheckin}
           />
         </Suspense>
         
         <Suspense fallback={<LoadingFallback height="500px" />}>
           <FAQSection 
-            onOpenCheckin={() => setIsCheckinModalOpen(true)}
+            onOpenCheckin={handleOpenCheckin}
           />
         </Suspense>
       </motion.main>
@@ -111,6 +135,12 @@ function App() {
       <Suspense fallback={null}>
         <WhatsAppButton />
       </Suspense>
+      
+      {/* Check-in Modal */}
+      <CheckinModal 
+        isOpen={isCheckinModalOpen}
+        onClose={() => setIsCheckinModalOpen(false)}
+      />
     </div>
   )
 }

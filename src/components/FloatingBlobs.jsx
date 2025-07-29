@@ -16,28 +16,31 @@ const FloatingBlobs = () => {
     
     return () => window.removeEventListener('resize', checkDevice)
   }, [])
-  // Reduce blobs on mobile for better performance
+  // Performance detection
+  const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
+  
+  // Reduce blobs based on device performance
   const blobs = [
     {
       id: 1,
-      size: isMobile ? 250 : 400,
+      size: isMobile ? 200 : (isLowPerformance ? 300 : 400),
       x: '10%',
       y: '20%',
       delay: 0,
-      duration: isMobile ? 12 : 8,
+      duration: isMobile ? 10 : (isLowPerformance ? 12 : 8),
       color: 'primary',
     },
     {
       id: 2,
-      size: isMobile ? 200 : 300,
+      size: isMobile ? 150 : (isLowPerformance ? 250 : 300),
       x: '80%',
       y: '60%',
       delay: 2,
-      duration: isMobile ? 15 : 10,
+      duration: isMobile ? 12 : (isLowPerformance ? 15 : 10),
       color: 'primary-light',
     },
-    // Only show first 2 blobs on mobile
-    ...(isMobile ? [] : [
+    // Only show additional blobs on high performance devices
+    ...(isMobile || isLowPerformance ? [] : [
       {
         id: 3,
         size: 250,

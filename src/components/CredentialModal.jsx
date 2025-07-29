@@ -54,6 +54,16 @@ const CredentialModal = ({ isOpen, onClose, credentialImage, ticketId, userName 
 
     const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}&text=${encodeURIComponent(text)}`
     window.open(url, '_blank', 'width=600,height=400')
+    
+    // Facebook Pixel - Track LinkedIn share
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'CustomEvent', {
+        event_name: 'CredentialShared',
+        platform: 'LinkedIn',
+        ticket_id: ticketId,
+        content_name: 'Check-in Bootcamp Programador em 7 Dias'
+      });
+    }
   }
 
   const shareOnTwitter = () => {
@@ -65,6 +75,16 @@ const CredentialModal = ({ isOpen, onClose, credentialImage, ticketId, userName 
 
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.origin)}`
     window.open(url, '_blank', 'width=600,height=400')
+    
+    // Facebook Pixel - Track Twitter share
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'CustomEvent', {
+        event_name: 'CredentialShared',
+        platform: 'Twitter',
+        ticket_id: ticketId,
+        content_name: 'Check-in Bootcamp Programador em 7 Dias'
+      });
+    }
   }
 
   const shareOnWhatsApp = () => {
@@ -78,8 +98,18 @@ Acabei de confirmar minha presença no bootcamp que pode mudar minha vida profis
 
 Vem comigo nessa jornada! ${window.location.origin}`
 
-          const url = `https://go.rodolfomori.com.br/suporte`
+    const url = `https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias`
     window.open(url, '_blank')
+    
+    // Facebook Pixel - Track WhatsApp share
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'CustomEvent', {
+        event_name: 'CredentialShared',
+        platform: 'WhatsApp',
+        ticket_id: ticketId,
+        content_name: 'Check-in Bootcamp Programador em 7 Dias'
+      });
+    }
   }
 
   const downloadImage = () => {
@@ -90,6 +120,15 @@ Vem comigo nessa jornada! ${window.location.origin}`
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
+      
+      // Facebook Pixel - Track image download
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'CustomEvent', {
+          event_name: 'CredentialDownloaded',
+          ticket_id: ticketId,
+          content_name: 'Check-in Bootcamp Programador em 7 Dias'
+        });
+      }
     }
   }
 
@@ -135,10 +174,10 @@ Vem comigo nessa jornada! ${window.location.origin}`
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: "spring", duration: 0.5 }}
-          className="relative w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto scrollbar-hide"
+          className="relative w-full h-full md:max-w-4xl md:h-auto md:mx-4 md:max-h-[90vh] overflow-y-auto scrollbar-hide modal-fullscreen-mobile"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="glass-card p-6 md:p-8 relative bg-gradient-to-br from-background via-secondary/20 to-background border border-primary/20 shadow-2xl">
+          <div className="glass-card p-4 md:p-6 lg:p-8 relative bg-gradient-to-br from-background via-secondary/20 to-background border border-primary/20 shadow-2xl h-full md:h-auto flex flex-col">
             {/* Decorative top border */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-light to-primary rounded-t-2xl" />
             
@@ -150,9 +189,9 @@ Vem comigo nessa jornada! ${window.location.origin}`
               onClick={onClose}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="absolute top-4 right-4 w-10 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-full flex items-center justify-center text-red-400 hover:text-red-300 transition-all duration-300"
+              className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500/30 rounded-full flex items-center justify-center text-red-400 hover:text-red-300 transition-all duration-300 z-10"
             >
-              ✕
+              <span className="text-lg md:text-base font-bold">✕</span>
             </motion.button>
 
             {/* Header */}
@@ -446,6 +485,18 @@ Vem comigo nessa jornada! ${window.location.origin}`
                     <p className="text-sm text-text-muted">
                       Sua credencial pode ser o empurrão que alguém precisa para mudar de vida através da programação.
                     </p>
+                  </div>
+
+                  {/* Close Button - Mobile Friendly */}
+                  <div className="mt-8 text-center">
+                    <motion.button
+                      onClick={onClose}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-primary/30"
+                    >
+                      ✨ Finalizar Check-in
+                    </motion.button>
                   </div>
                 </div>
               </motion.div>

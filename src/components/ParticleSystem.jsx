@@ -48,20 +48,30 @@ const ParticleSystem = () => {
     // Don't render particles if reduced motion is preferred
     if (reducedMotion) return []
     
+    // Performance detection
+    const isLowPerformance = navigator.deviceMemory < 4 || navigator.hardwareConcurrency < 4;
+    
     // Safe check for window object
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200
     
-    // Reduce particles on mobile for better performance
-    const particleCount = isMobile ? 12 : 30
+    // Reduce particles based on device performance
+    let particleCount;
+    if (isLowPerformance) {
+      particleCount = 6; // Very few particles for low performance devices
+    } else if (isMobile) {
+      particleCount = 8; // Reduced for mobile
+    } else {
+      particleCount = 20; // Reduced from 30 for better performance
+    }
     
     return Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       code: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
       initialX: Math.random() * screenWidth,
-      delay: Math.random() * (isMobile ? 15 : 20),
-      duration: (isMobile ? 12 : 15) + Math.random() * 10,
+      delay: Math.random() * (isMobile ? 10 : 15), // Reduced delays
+      duration: (isMobile ? 8 : 12) + Math.random() * 8, // Faster animations
       size: 0.7 + Math.random() * 0.6,
-      opacity: (isMobile ? 0.2 : 0.3) + Math.random() * 0.4,
+      opacity: (isMobile ? 0.15 : 0.25) + Math.random() * 0.3, // Reduced opacity
     }))
   }, [isMobile, reducedMotion])
 

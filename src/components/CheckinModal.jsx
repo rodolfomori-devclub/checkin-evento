@@ -28,6 +28,16 @@ const CheckinModal = ({ isOpen, onClose }) => {
   const handleStepComplete = (stepIndex, data = {}) => {
     if (!completedSteps.includes(stepIndex)) {
       setCompletedSteps(prev => [...prev, stepIndex])
+      
+      // Facebook Pixel - Track step completion
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'CustomEvent', {
+          event_name: 'CheckinStepComplete',
+          step_number: stepIndex + 1,
+          step_name: getStepName(stepIndex),
+          content_name: 'Check-in Bootcamp Programador em 7 Dias'
+        });
+      }
     }
     
     // Update user data if provided
@@ -36,11 +46,25 @@ const CheckinModal = ({ isOpen, onClose }) => {
     }
     
     // Move to next step if not the last one
-    if (stepIndex === currentStep && stepIndex < 5) {
+    if (stepIndex === currentStep && stepIndex < 7) {
       setTimeout(() => {
         setCurrentStep(stepIndex + 1)
       }, 500)
     }
+  }
+
+  const getStepName = (stepIndex) => {
+    const stepNames = [
+      'Confirmar Dados',
+      'Adicionar ao Calendário', 
+      'Entrar no WhatsApp',
+      'Configurar Zoom',
+      'Preparar Ambiente',
+      'Gerar Ingresso',
+      'Gravação Vitalícia',
+      'Código Completo'
+    ];
+    return stepNames[stepIndex] || `Etapa ${stepIndex + 1}`;
   }
 
   const resetModal = () => {
@@ -50,6 +74,15 @@ const CheckinModal = ({ isOpen, onClose }) => {
   }
 
   const handleClose = () => {
+    // Facebook Pixel - Track modal close
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'CustomEvent', {
+        event_name: 'CheckinModalClose',
+        steps_completed: completedSteps.length,
+        content_name: 'Check-in Bootcamp Programador em 7 Dias'
+      });
+    }
+    
     resetModal()
     onClose()
   }
@@ -83,9 +116,9 @@ const CheckinModal = ({ isOpen, onClose }) => {
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 group z-10"
+              className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500/30 transition-all duration-200 group z-10"
             >
-              <svg className="w-5 h-5 text-text-light group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 md:w-5 md:h-5 text-red-400 group-hover:text-red-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -101,7 +134,7 @@ const CheckinModal = ({ isOpen, onClose }) => {
                 🚀 <span className="text-gradient">Check-in Interativo</span>
               </h2>
               <p className="text-text-muted text-lg">
-                Complete as 6 etapas para confirmar sua presença no bootcamp
+                Complete as 8 etapas para confirmar sua presença no bootcamp
               </p>
             </motion.div>
 
@@ -115,14 +148,14 @@ const CheckinModal = ({ isOpen, onClose }) => {
               <div className="flex justify-between items-center mb-4">
                 <span className="text-sm text-text-muted">Progresso</span>
                 <span className="text-sm text-primary font-semibold">
-                  {completedSteps.length}/6 concluídas
+                  {completedSteps.length}/8 concluídas
                 </span>
               </div>
               
               <div className="h-2 bg-secondary/50 rounded-full overflow-hidden">
                               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${(completedSteps.length / 6) * 100}%` }}
+                animate={{ width: `${(completedSteps.length / 8) * 100}%` }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="h-full bg-gradient-to-r from-primary to-primary-light"
               />

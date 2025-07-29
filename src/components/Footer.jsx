@@ -230,7 +230,7 @@ const Footer = ({ onOpenCheckin }) => {
             
             <div className="space-y-4">
               <motion.a
-                href="https://go.rodolfomori.com.br/suporte"
+                href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
