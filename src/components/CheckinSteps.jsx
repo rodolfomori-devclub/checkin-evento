@@ -244,7 +244,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           currency: 'BRL'
         });
       }
-      window.open('https://pay.assiny.com.br/38ca3c/node/977065', '_blank')
+      window.open('https://pay.assiny.com.br/38ca3c/node/97708J', '_blank')
       // Não completa automaticamente, mostra os checkboxes
     }
     // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
@@ -261,7 +261,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           currency: 'BRL'
         });
       }
-      window.open('https://pay.assiny.com.br/38ca3c/node/977066', '_blank')
+      window.open('https://pay.assiny.com.br/de8237/node/242143', '_blank')
       // Não completa automaticamente, mostra os checkboxes
     }
     // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
@@ -764,7 +764,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 {recordingOffer === 'yes' && (
                   <div className="mb-4">
                     <a
-                      href="https://pay.assiny.com.br/38ca3c/node/977065"
+                      href="https://pay.assiny.com.br/38ca3c/node/97708J"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
@@ -948,7 +948,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 {codeOffer === 'yes' && (
                   <div className="mb-4">
                     <a
-                      href="https://pay.assiny.com.br/38ca3c/node/977066"
+                      href="https://pay.assiny.com.br/de8237/node/242143"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"

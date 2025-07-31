@@ -2,29 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const VideoSection = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const videoRef = useRef(null)
-
-  useEffect(() => {
-    // Simulate video loading
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-      } else {
-        videoRef.current.play()
-      }
-      setIsPlaying(!isPlaying)
-    }
-  }
 
   return (
     <div className="relative">
@@ -35,60 +12,21 @@ const VideoSection = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="video-container relative group"
       >
-        {/* Loading skeleton */}
-        {isLoading && (
-          <div className="absolute inset-0 bg-secondary/50 backdrop-blur-sm rounded-2xl animate-pulse flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-text-muted font-medium">Carregando vídeo...</p>
-            </div>
-          </div>
-        )}
 
-        {/* Video placeholder (replace with actual video) */}
+
+        {/* Video iframe */}
         <div className="relative aspect-video bg-gradient-to-br from-secondary to-background rounded-2xl overflow-hidden">
-          {/* Thumbnail placeholder */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-primary/30">
-                <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-xl font-bold text-text-light" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>Mensagem do Rodolfo</h4>
-                <p className="text-text-muted text-sm max-w-xs" style={{ fontFamily: 'var(--font-sans)' }}>
-                  Clique para ver a mensagem exclusiva sobre o check-in
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Play button overlay */}
-          <motion.button
-            onClick={handlePlayPause}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="absolute inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center group-hover:bg-black/40 transition-all duration-300"
-          >
-            <div className="w-20 h-20 bg-primary/90 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-primary shadow-lg shadow-primary/50">
-              <svg className="w-8 h-8 text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </motion.button>
-
-          {/* Video element - Replace with actual video when available */}
-          {/* 
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-          >
-            <source src="/path-to-rodolfo-video.mp4" type="video/mp4" />
-          </video>
-          */}
+          <iframe 
+            id="panda-1a9c72f3-b5f7-4062-b44e-f43628f61fb8" 
+            src="https://player-vz-857eb61a-4f3.tv.pandavideo.com.br/embed/?v=1a9c72f3-b5f7-4062-b44e-f43628f61fb8" 
+            style={{ border: 'none' }} 
+            allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" 
+            allowFullScreen={true} 
+            width="100%" 
+            height="100%"
+            fetchPriority="high"
+            className="w-full h-full object-cover rounded-2xl"
+          />
         </div>
 
         {/* Floating elements */}
@@ -123,18 +61,18 @@ const VideoSection = () => {
         </div>
         
         <p className="text-sm text-text-muted leading-relaxed">
-          "Se você está aqui, é porque garantiu seu ingresso pro Bootcamp que vai mudar sua vida profissional. 
-          Mas ter o ingresso não é suficiente..."
+          "Confira esta mensagem exclusiva sobre o check-in do Bootcamp Programador em 7 Dias. 
+          É fundamental que você confirme sua presença para garantir sua vaga!"
         </p>
 
         <div className="flex items-center gap-4 text-xs text-text-muted">
           <span className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-            Ao vivo
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+            Disponível
           </span>
-          <span>2:34 min</span>
+          <span>Mensagem importante</span>
           <span className="flex items-center gap-1">
-            ❤️ 2.4k
+            🎯 Check-in obrigatório
           </span>
         </div>
       </motion.div>
