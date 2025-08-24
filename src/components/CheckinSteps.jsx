@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect, useMemo, useCallback, memo } from '
 import { motion, AnimatePresence } from 'framer-motion'
 import CredentialGenerator from './CredentialGenerator'
 import CredentialModal from './CredentialModal'
+import WhatsAppStep from './WhatsAppStep'
+import { sendToGoogleSheets } from '../utils/googleSheets'
+import { saveDataLocally, sendToGoogleSheetsViaWebhook } from '../utils/googleSheetsAlternative'
+import { saveToFirestore } from '../utils/firebase'
 
 
 // Componente memoizado para o input do nome
@@ -45,7 +49,10 @@ const ActionButton = memo(({ onClick, disabled, children, className = "" }) => (
 
 const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComplete, onClose }) => {
   const [formData, setFormData] = useState({
-    name: userData.name || ''
+    name: userData.name || '',
+    email: userData.email || '',
+    recordingResponse: '', // Resposta sobre a gravação
+    codeResponse: '' // Resposta sobre o código
   })
   const [userPhoto, setUserPhoto] = useState(null)
   const [credentialImage, setCredentialImage] = useState(null)
@@ -64,7 +71,6 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
     internet: false
   })
   
-  const audioRef = useRef(null)
   const fileInputRef = useRef(null)
 
   // Sound effect for completed steps
@@ -110,6 +116,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
 
   const [showTimer, setShowTimer] = useState(false)
   const [timerCount, setTimerCount] = useState(3)
+  
 
   // Timer effect para redirecionamento automático
   useEffect(() => {
@@ -120,12 +127,13 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       return () => clearTimeout(timer)
     } else if (showTimer && timerCount === 0) {
       // Redirecionar para o Google Calendar
-      const calendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=Bootcamp+Programador+em+7+dias&details=Link+da+call%3A+https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&location=https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&dates=20240803T230000Z%2F20240804T000000Z"
+      const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
       window.open(calendarUrl, '_blank')
       setShowTimer(false)
       setTimerCount(3)
     }
   }, [showTimer, timerCount])
+
 
 
 
@@ -208,6 +216,10 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
     setFormData(prev => ({ ...prev, name: e.target.value }))
   }, [])
 
+  const handleEmailChange = useCallback((e) => {
+    setFormData(prev => ({ ...prev, email: e.target.value }))
+  }, [])
+
   const handleFileUpload = useCallback((event) => {
     const file = event.target.files[0]
     if (file) {
@@ -235,6 +247,9 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
 
   const handleRecordingOffer = useCallback((response) => {
     setRecordingOffer(response)
+    // Atualizar formData com a resposta
+    setFormData(prev => ({ ...prev, recordingResponse: response }))
+    
     if (response === 'yes') {
       if (typeof fbq !== 'undefined') {
         fbq('track', 'CustomEvent', {
@@ -245,13 +260,14 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         });
       }
       window.open('https://pay.assiny.com.br/38ca3c/node/97708J', '_blank')
-      // Não completa automaticamente, mostra os checkboxes
     }
-    // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
   }, [])
 
   const handleCodeOffer = useCallback((response) => {
     setCodeOffer(response)
+    // Atualizar formData com a resposta
+    setFormData(prev => ({ ...prev, codeResponse: response }))
+    
     if (response === 'yes') {
       if (typeof fbq !== 'undefined') {
         fbq('track', 'CustomEvent', {
@@ -262,20 +278,61 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         });
       }
       window.open('https://pay.assiny.com.br/de8237/node/242143', '_blank')
-      // Não completa automaticamente, mostra os checkboxes
     }
-    // Se response === 'no', não completa o step automaticamente, mostra os checkboxes
   }, [])
 
 
 
-  const onCredentialGenerated = useCallback((imageData, generatedTicketId) => {
+  const onCredentialGenerated = useCallback(async (imageData, generatedTicketId) => {
     setCredentialImage(imageData)
     setTicketId(generatedTicketId)
     setIsCredentialModalOpen(true)
     setShouldGenerateCredential(false)
     onStepComplete(7)
     playSuccessSound()
+    
+    // Preparar dados completos
+    const completeData = {
+      name: formData.name,
+      email: formData.email,
+      recordingResponse: formData.recordingResponse,
+      codeResponse: formData.codeResponse
+    }
+    
+    // Salvar dados localmente primeiro (backup)
+    saveDataLocally(completeData)
+    
+    // Tentar salvar no Firebase (método principal)
+    try {
+      const result = await saveToFirestore(completeData)
+      if (result.success) {
+        console.log('🔥 Dados salvos no Firebase com sucesso!', result.id)
+      } else {
+        throw new Error(result.error)
+      }
+    } catch (error) {
+      console.log('❌ Erro ao salvar no Firebase, tentando Google Sheets...')
+      
+      // Se falhar, tentar Google Apps Script como fallback
+      try {
+        const success = await sendToGoogleSheets(completeData)
+        if (success) {
+          console.log('✅ Dados enviados para Google Sheets como fallback')
+        } else {
+          throw new Error('Falha no Google Sheets')
+        }
+      } catch (error2) {
+        console.log('❌ Tentando webhook como último recurso...')
+        
+        // Último recurso: webhook
+        try {
+          await sendToGoogleSheetsViaWebhook(completeData)
+          console.log('✅ Dados enviados via webhook')
+        } catch (error3) {
+          console.log('⚠️ Dados salvos apenas localmente')
+        }
+      }
+    }
     
     if (typeof fbq !== 'undefined') {
       fbq('track', 'Lead', {
@@ -292,7 +349,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         content_name: 'Check-in Bootcamp Programador em 7 Dias'
       });
     }
-  }, [onStepComplete, playSuccessSound])
+  }, [onStepComplete, playSuccessSound, formData.name, formData.email])
 
   const isStepAccessible = useCallback((stepIndex) => {
     if (stepIndex === 0) return true
@@ -318,12 +375,22 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           alert('Por favor, digite seu nome completo')
           return
         }
-        onStepComplete(step.id, { name: formData.name })
+        if (!formData.email.trim()) {
+          alert('Por favor, digite seu e-mail')
+          return
+        }
+        // Validação básica de e-mail
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+          alert('Por favor, digite um e-mail válido')
+          return
+        }
+        onStepComplete(step.id, { name: formData.name, email: formData.email })
       } else if (step.id === 1) {
-        const calendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=Bootcamp+Programador+em+7+dias&details=Link+da+call%3A+https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&location=https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&dates=20240803T230000Z%2F20240804T000000Z"
+        const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
         window.open(calendarUrl, '_blank')
       } else if (step.id === 2) {
-        const whatsappUrl = "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
+        const whatsappUrl = "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
         window.open(whatsappUrl, '_blank')
       } else if (step.id === 3) {
         if (!zoomCheckbox) {
@@ -390,7 +457,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         </div>
       </button>
     )
-  }, [formData.name, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, onStepComplete, playSuccessSound, generateCredential])
+  }, [formData.name, formData.email, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, onStepComplete, playSuccessSound, generateCredential])
 
   // Renderizar apenas o step atual
   const currentStepContent = useMemo(() => {
@@ -414,20 +481,42 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
             </p>
           </div>
           
+          <div>
+            <label className="block text-sm font-medium text-text-light mb-2">
+              E-mail *
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={handleEmailChange}
+              placeholder="E-mail que você realizou a compra do ingresso"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-text-light placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
+              required
+            />
+            <p className="text-xs text-text-muted mt-2">
+              Digite o mesmo e-mail usado na compra do ingresso
+            </p>
+          </div>
+          
           {!isStepCompleted(0) && (
             <div className="text-center">
               <ActionButton
                 onClick={() => {
-                  if (formData.name.trim()) {
-                    onStepComplete(0, { name: formData.name })
+                  if (formData.name.trim() && formData.email.trim()) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                    if (!emailRegex.test(formData.email)) {
+                      alert('Por favor, digite um e-mail válido')
+                      return
+                    }
+                    onStepComplete(0, { name: formData.name, email: formData.email })
                     playSuccessSound()
                     setShowTimer(true) // Ativar timer
                   } else {
-                    alert('Por favor, digite seu nome completo')
+                    alert('Por favor, preencha todos os campos')
                   }
                 }}
-                disabled={!formData.name.trim()}
-                className={formData.name.trim() 
+                disabled={!formData.name.trim() || !formData.email.trim()}
+                className={formData.name.trim() && formData.email.trim() 
                   ? 'bg-primary hover:bg-primary-light text-white' 
                   : 'bg-gray-500/50 text-gray-400 cursor-not-allowed'
                 }
@@ -442,7 +531,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
 
     // Se o step 0 estiver completo, mostrar também o conteúdo da agenda
     if (isStepCompleted(0) && !isStepCompleted(1)) {
-      const calendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=Bootcamp+Programador+em+7+dias&details=Link+da+call%3A+https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&location=https%3A%2F%2Fus06web.zoom.us%2Fj%2F87179390873%3Fpwd%3DFBqdR8inouCNsKmFbmW4l4QIjWXe0I.1&dates=20240803T230000Z%2F20240804T000000Z"
+      const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
       
       const agendaContent = (
         <div className="mb-4 p-6 glass-card">
@@ -472,7 +561,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 </div>
               ) : (
                 <>
-                  <p className="text-text-muted text-sm">
+                  <p className="text-text-muted text-sm mb-7">
                     O link do Google Calendar foi aberto em uma nova aba
                   </p>
 
@@ -539,42 +628,11 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
     // Para outros steps, mostrar o conteúdo específico
     if (step.id === 2 && !isStepCompleted(2)) {
       return (
-        <div className="mb-4 p-6 glass-card">
-          <div className="text-center space-y-6">
-            <h4 className="text-lg font-semibold text-text-light mb-2">
-              💬 Entrar no WhatsApp
-            </h4>
-            <p className="text-text-muted text-sm mb-4">
-              Já entrou no Grupo do Evento ?
-            </p>
-            
-            <motion.a
-              href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg px-8 py-4 rounded-xl transition-all duration-300 group"
-            >
-              <span className="text-2xl group-hover:scale-110 transition-transform duration-300">💬</span>
-              <span>Entrar no Grupo do Evento</span>
-            </motion.a>
-
-            <div className="mt-6">
-              <Checkbox
-                id="whatsapp-checkbox"
-                checked={false}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    onStepComplete(2)
-                    playSuccessSound()
-                  }
-                }}
-                label="Já entrei no grupo, próximo passo"
-              />
-            </div>
-          </div>
-        </div>
+        <WhatsAppStep 
+          onComplete={() => onStepComplete(2)}
+          playSuccessSound={playSuccessSound}
+          isActive={true}
+        />
       )
     }
 
@@ -870,6 +928,15 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 <ActionButton
                   onClick={() => {
                     if (recordingCheckboxes.noThanks || recordingCheckboxes.alreadyHave) {
+                      // Atualizar resposta final baseada no checkbox
+                      let finalResponse = recordingOffer
+                      if (recordingCheckboxes.noThanks) {
+                        finalResponse = 'no_thanks'
+                      } else if (recordingCheckboxes.alreadyHave) {
+                        finalResponse = 'already_purchased'
+                      }
+                      setFormData(prev => ({ ...prev, recordingResponse: finalResponse }))
+                      
                       onStepComplete(5)
                       playSuccessSound()
                     } else {
@@ -1054,6 +1121,15 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 <ActionButton
                   onClick={() => {
                     if (codeCheckboxes.noThanks || codeCheckboxes.alreadyHave) {
+                      // Atualizar resposta final baseada no checkbox
+                      let finalResponse = codeOffer
+                      if (codeCheckboxes.noThanks) {
+                        finalResponse = 'no_thanks'
+                      } else if (codeCheckboxes.alreadyHave) {
+                        finalResponse = 'already_purchased'
+                      }
+                      setFormData(prev => ({ ...prev, codeResponse: finalResponse }))
+                      
                       onStepComplete(6)
                       playSuccessSound()
                     } else {
@@ -1172,7 +1248,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       )
     }
     return null;
-  }, [currentStep, steps, formData.name, calendarCheckbox, isStepCompleted, handleNameChange, onStepComplete, playSuccessSound, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, userPhoto, handleFileUpload, generateCredential, handleRecordingOffer, handleCodeOffer, setRecordingOffer, setCodeOffer, recordingCheckboxes, setRecordingCheckboxes, codeCheckboxes, setCodeCheckboxes, onClose, showTimer, timerCount])
+  }, [currentStep, steps, formData.name, formData.email, calendarCheckbox, isStepCompleted, handleNameChange, handleEmailChange, onStepComplete, playSuccessSound, zoomCheckbox, equipmentCheckboxes, recordingOffer, codeOffer, userPhoto, handleFileUpload, generateCredential, handleRecordingOffer, handleCodeOffer, setRecordingOffer, setCodeOffer, recordingCheckboxes, setRecordingCheckboxes, codeCheckboxes, setCodeCheckboxes, onClose, showTimer, timerCount])
 
   return (
     <div className="space-y-4 md:space-y-6">

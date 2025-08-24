@@ -24,7 +24,7 @@ const VideoSection = () => {
             allowFullScreen={true} 
             width="100%" 
             height="100%"
-            fetchPriority="high"
+            fetchpriority="high"
             className="w-full h-full object-cover rounded-2xl"
           />
         </div>

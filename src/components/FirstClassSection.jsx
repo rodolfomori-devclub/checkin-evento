@@ -219,7 +219,7 @@ const FirstClassSection = () => {
               className="inline-flex items-center gap-3 bg-red-500/10 backdrop-blur-sm px-4 py-2 rounded-full border border-red-500/20 mb-6"
             >
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-              <span className="text-red-400 font-semibold">DOMINGO, 3 DE AGOSTO, 20H</span>
+              <span className="text-red-400 font-semibold">SEGUNDA-FEIRA, 19 DE AGOSTO, 20H</span>
             </motion.div>
 
             <h3 className="text-2xl md:text-3xl font-bold text-text-light mb-4">

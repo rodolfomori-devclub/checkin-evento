@@ -93,12 +93,12 @@ const CredentialModal = ({ isOpen, onClose, credentialImage, ticketId, userName 
 Acabei de confirmar minha presença no bootcamp que pode mudar minha vida profissional!
 
 ✅ *Meu ingresso:* #DC2025-${String(ticketId).padStart(4, '0')}
-📅 *Data:* 3-9 de Agosto, 2025
+📅 *Data:* 19-25 de Agosto, 2025
 💻 *Modalidade:* 100% Online
 
 Vem comigo nessa jornada! ${window.location.origin}`
 
-    const url = `https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias`
+    const url = `https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i`
     window.open(url, '_blank')
     
     // Facebook Pixel - Track WhatsApp share
@@ -334,6 +334,31 @@ Vem comigo nessa jornada! ${window.location.origin}`
                     </svg>
                   </div>
                   <span className="relative z-10">Copiar Imagem</span>
+                </motion.button>
+              </div>
+
+              {/* Add to Calendar */}
+              <div className="text-center">
+                <motion.button
+                  onClick={() => window.open('https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z', '_blank')}
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: '0 10px 25px rgba(255, 215, 0, 0.3)'
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-black font-semibold text-lg px-8 py-4 rounded-xl transition-all duration-300 group shadow-lg hover:shadow-xl relative overflow-hidden"
+                >
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 animate-pulse" />
+                  </div>
+                  
+                  <div className="relative z-10 group-hover:scale-110 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+                      <path d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
+                    </svg>
+                  </div>
+                  <span className="relative z-10">📅 Adicionar Aula 1 à Agenda</span>
                 </motion.button>
               </div>
 

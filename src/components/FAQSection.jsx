@@ -250,7 +250,7 @@ const FAQSection = ({ onOpenCheckin }) => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <motion.a
-                  href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
+                  href="https://go.rodolfomori.com.br/suporte"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
@@ -279,10 +279,6 @@ const FAQSection = ({ onOpenCheckin }) => {
                   <span>Suporte disponível 24/7</span>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span>Resposta em menos de 5 minutos</span>
-                </div>
 
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />

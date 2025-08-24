@@ -5,7 +5,7 @@ const WhatsAppButton = () => {
   const [isHovered, setIsHovered] = useState(false)
 
   // DevClub support WhatsApp link
-  const whatsappUrl = "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
+  const whatsappUrl = "https://go.rodolfomori.com.br/suporte"
 
   return (
     <>

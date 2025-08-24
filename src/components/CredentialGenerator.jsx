@@ -184,7 +184,7 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
         // Data do evento
         ctx.fillStyle = '#94A3B8'
         ctx.font = 'bold 18px Arial'
-        ctx.fillText('3-9 AGOSTO • 2025', cardX + 40, nameY + 80)
+        ctx.fillText('19-25 AGOSTO • 2025', cardX + 40, nameY + 80)
         
         // Status
         ctx.fillStyle = '#37E359'

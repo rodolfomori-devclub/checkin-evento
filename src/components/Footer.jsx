@@ -52,7 +52,7 @@ const Footer = ({ onOpenCheckin }) => {
   const importantInfo = [
     {
       title: 'Data do Evento',
-      value: 'Domingo, 3 de Agosto - 20h',
+      value: 'Segunda-feira, 19 de Agosto - 20h',
       icon: '📆'
     },
     {
@@ -230,7 +230,7 @@ const Footer = ({ onOpenCheckin }) => {
             
             <div className="space-y-4">
               <motion.a
-                href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias"
+                href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}

@@ -62,7 +62,7 @@ const Countdown = memo(({ targetDate }) => {
           CONTAGEM REGRESSIVA
         </h3>
         <p className="text-text-muted" style={{ fontFamily: 'var(--font-sans)' }}>
-          Até domingo, 3 de agosto, às 20h
+          Até segunda-feira, 19 de agosto, às 20h
         </p>
       </motion.div>
 

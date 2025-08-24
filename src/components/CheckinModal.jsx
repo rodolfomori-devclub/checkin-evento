@@ -6,7 +6,8 @@ const CheckinModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0)
   const [completedSteps, setCompletedSteps] = useState([])
   const [userData, setUserData] = useState({
-    name: ''
+    name: '',
+    email: ''
   })
 
   // Close modal on escape key
@@ -70,7 +71,7 @@ const CheckinModal = ({ isOpen, onClose }) => {
   const resetModal = () => {
     setCurrentStep(0)
     setCompletedSteps([])
-    setUserData({ name: '' })
+    setUserData({ name: '', email: '' })
   }
 
   const handleClose = () => {

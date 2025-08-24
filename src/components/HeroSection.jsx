@@ -109,7 +109,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             transition={{ delay: 1, duration: 0.6 }}
             className="lg:scale-100 scale-90"
           >
-            <Countdown targetDate="2025-08-03T20:00:00" />
+            <Countdown targetDate="2025-08-19T20:00:00" />
           </motion.div>
 
           {/* Subtitle - Shorter on mobile */}
@@ -135,7 +135,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             <p className="text-yellow-400 font-medium flex items-start lg:items-center gap-2 text-sm lg:text-base" style={{ fontFamily: 'var(--font-sans)' }}>
               <span className="text-lg lg:text-xl flex-shrink-0">⚠️</span>
               <span>
-                <strong>ATENÇÃO:</strong> <span className="hidden lg:inline">O check-in é OBRIGATÓRIO e deve ser feito até</span><span className="lg:hidden">Check-in até</span> domingo, dia 3 de agosto, às 18h.
+                <strong>ATENÇÃO:</strong> <span className="hidden lg:inline">O check-in é OBRIGATÓRIO e deve ser feito até</span><span className="lg:hidden">Check-in até</span> segunda-feira, dia 19 de agosto, às 18h.
               </span>
             </p>
           </motion.div>

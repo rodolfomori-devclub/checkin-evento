@@ -9,135 +9,97 @@ const ScheduleSection = () => {
   const scheduleData = [
     {
       id: 0,
-      day: 'DOMINGO',
-      date: 'DIA 1',
-      title: 'Do Zero ao Primeiro "SIM"',
-      time: 'Ao vivo às 20h',
+      day: 'TERÇA',
+      date: '19 AGO',
+      title: 'Fundamentos da Programação: Seu Mapa do Tesouro',
+      time: 'Ao vivo às 20h no Zoom',
       type: 'live',
       color: 'primary',
       gradient: 'from-primary/20 to-primary-light/20',
       border: 'border-primary/30',
       icon: '🚀',
       topics: [
-        'O checklist exato pra sair do zero e virar programador profissional',
-        'Minha trajetória completa: de eletricista a dev sênior em bancos',
-        'Apresentação do projeto que vamos construir juntos',
-        'Como funciona o mercado de programação em 2025',
-        'Entrega dos materiais exclusivos do Bootcamp'
+        'O que é programação e como funciona o mundo dos códigos',
+        'Passo a passo completo para se tornar um programador profissional',
+        'As tecnologias mais procuradas pelas empresas em 2025',
+        'Como dominar as ferramentas que o mercado exige',
+        'Início do nosso projeto prático + entrega do mapa completo da sua jornada'
       ]
     },
     {
       id: 1,
-      day: 'SEGUNDA',
-      date: 'DIA 2',
-      title: 'HTML Completo: A Base de Tudo',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
+      day: 'QUARTA',
+      date: '20 AGO',
+      title: 'Segunda Tecnologia + O Que Empresas Procuram',
+      time: 'Ao vivo às 20h no Zoom',
+      type: 'live',
       color: 'emerald',
       gradient: 'from-emerald-500/20 to-green-500/20',
       border: 'border-emerald-500/30',
-      icon: '🏗️',
+      icon: '💡',
       topics: [
-        'Estrutura completa do HTML do zero ao avançado',
-        'Criando a base do nosso App de Previsão do Tempo',
-        'Tags essenciais que todo programador precisa dominar',
-        'Boas práticas que vão fazer diferença no seu código',
-        'Exercícios práticos pra fixar o aprendizado'
+        'Aprendendo nossa segunda tecnologia essencial',
+        'Evolução significativa do nosso projeto prático',
+        'Os requisitos reais que empresas buscam em candidatos',
+        'Como se destacar em processos seletivos',
+        'Habilidades técnicas e comportamentais valorizadas'
       ]
     },
     {
       id: 2,
-      day: 'TERÇA',
-      date: 'DIA 3',
-      title: 'CSS Completo: Deixando Tudo Bonito',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
-      color: 'blue',
-      gradient: 'from-blue-500/20 to-sky-500/20',
-      border: 'border-blue-500/30',
-      icon: '🎨',
+      day: 'QUINTA',
+      date: '21 AGO',
+      title: '⭐ AULA MAIS IMPORTANTE: JavaScript + DevClub',
+      time: 'Ao vivo às 20h no Zoom',
+      type: 'live',
+      color: 'red',
+      gradient: 'from-red-500/20 to-orange-500/20',
+      border: 'border-red-500/30',
+      icon: '🔥',
       topics: [
-        'CSS do básico ao profissional em um dia',
-        'Estilizando nosso projeto pra impressionar recrutadores',
-        'Flexbox e Grid: as técnicas mais pedidas do mercado',
-        'Responsividade: seu site perfeito em qualquer tela',
-        'Animações e efeitos que valorizam seu portfólio'
+        'JavaScript: a linguagem de programação mais usada do mundo',
+        'Deixando nossa aplicação 90% pronta e funcional',
+        'Técnicas avançadas que impressionam recrutadores',
+        'Tudo sobre o DevClub: sua comunidade de transformação',
+        'Como aproveitar ao máximo nossa metodologia exclusiva'
       ]
     },
     {
       id: 3,
-      day: 'QUARTA',
-      date: 'DIA 4',
-      title: 'Aula com Recrutadora: Seja Contratado!',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
-      color: 'indigo',
-      gradient: 'from-indigo-500/20 to-purple-500/20',
-      border: 'border-indigo-500/30',
-      icon: '💼',
+      day: 'SÁBADO',
+      date: '23 AGO',
+      title: '🎁 AULA BÔNUS: Tira-Dúvidas Exclusivo com Rodolfo',
+      time: 'Ao vivo às 14h no Zoom',
+      type: 'live',
+      color: 'yellow',
+      gradient: 'from-yellow-500/20 to-amber-500/20',
+      border: 'border-yellow-500/30',
+      icon: '💬',
       topics: [
-        'Currículo matador: o que recrutadores realmente procuram',
-        'LinkedIn que chama atenção e gera entrevistas',
-        'Como se preparar pras entrevistas técnicas',
-        'O que responder nas perguntas mais difíceis',
-        'Erros fatais que eliminam candidatos (e como evitar)'
+        'Sessão exclusiva de perguntas e respostas ao vivo',
+        'Resolução de dúvidas técnicas do projeto',
+        'Mentoria personalizada para seus desafios',
+        'Dicas avançadas que não cabem nas aulas regulares',
+        'Networking e conexão direta com o instrutor'
       ]
     },
     {
       id: 4,
-      day: 'QUINTA',
-      date: 'DIA 5',
-      title: 'JavaScript: A Mágica Acontece',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
-      color: 'cyan',
-      gradient: 'from-cyan-500/20 to-teal-500/20',
-      border: 'border-cyan-500/30',
-      icon: '⚡',
-      topics: [
-        'Lógica de programação descomplicada',
-        'JavaScript na prática: fazendo seu projeto funcionar',
-        'Integração com APIs: buscando dados meteorológicos reais',
-        'Manipulação do DOM: interatividade profissional',
-        'Debugando código como um programador sênior'
-      ]
-    },
-    {
-      id: 5,
-      day: 'SEXTA',
-      date: 'DIA 6',
-      title: 'R$1.000 em 7 Dias com Programação',
-      time: 'Liberado às 9h + Monitoria às 20h',
-      type: 'recorded',
-      color: 'yellow',
-      gradient: 'from-yellow-500/20 to-amber-500/20',
-      border: 'border-yellow-500/30',
-      icon: '💰',
-      topics: [
-        'Como vender o projeto que criamos por R$1.000+',
-        'Onde encontrar seus primeiros clientes rapidamente',
-        'Precificação: quanto cobrar sendo iniciante',
-        'Template de proposta comercial que converte',
-        'Cases reais de alunos que faturaram na primeira semana'
-      ]
-    },
-    {
-      id: 6,
-      day: 'SÁBADO',
-      date: 'DIA 7',
-      title: 'Próximos Passos + Sorteio do Notebook',
-      time: 'Ao vivo às 20h',
+      day: 'DOMINGO',
+      date: '24 AGO',
+      title: 'Masterclass com Fernanda: A Melhor Recrutadora do Brasil',
+      time: 'Ao vivo às 20h no Zoom',
       type: 'live',
-      color: 'primary',
-      gradient: 'from-primary/20 to-primary-light/20',
-      border: 'border-primary/30',
-      icon: '🎉',
+      color: 'purple',
+      gradient: 'from-purple-500/20 to-violet-500/20',
+      border: 'border-purple-500/30',
+      icon: '👩‍💼',
       topics: [
-        'Plano de ação: seus próximos 90 dias mapeados',
-        'Como usar IA pra acelerar 10x seu aprendizado',
-        'Tecnologias pra aprender depois do Bootcamp',
-        'Comunidade: como continuar evoluindo com o grupo',
-        'SORTEIO DO NOTEBOOK AO VIVO!'
+        'Como criar um LinkedIn que gera entrevistas automaticamente',
+        'Currículo perfeito: template que aprovamos em grandes empresas',
+        'Preparação completa para entrevistas técnicas e comportamentais',
+        'As perguntas mais difíceis e como respondê-las com confiança',
+        'Segredos de recrutadores que ninguém te conta'
       ]
     }
   ]
@@ -195,12 +157,12 @@ const ScheduleSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-light mb-6" style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
-            📚 Cronograma Completo dos{' '}
-            <span className="text-gradient">7 Dias</span>
+            📚 Cronograma Completo das{' '}
+            <span className="text-gradient">Aulas ao Vivo</span>
           </h2>
           <p className="text-xl md:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
-            ⏰ São apenas <span className="text-primary font-semibold">7 dias que podem mudar</span> os próximos{' '}
-            <span className="text-primary font-semibold">7 anos da sua vida</span>
+            ⏰ São apenas <span className="text-primary font-semibold">5 aulas transformadoras</span> que podem mudar{' '}
+            <span className="text-primary font-semibold">sua vida para sempre</span>
           </p>
         </motion.div>
 
@@ -303,14 +265,14 @@ const ScheduleSection = () => {
         >
           <div className="glass-card p-8 max-w-4xl mx-auto bg-gradient-to-r from-primary/10 to-primary-light/10 border border-primary/20">
             <h3 className="text-2xl md:text-3xl font-bold text-text-light mb-4">
-              🎯 Enquanto a maioria vai continuar no mesmo lugar...
+              🎯 Todas as aulas ao vivo no Zoom com interação em tempo real
             </h3>
             <p className="text-lg text-text-muted mb-6 leading-relaxed">
-              Você vai estar construindo um projeto real, aprendendo o que o mercado pede e saindo com um 
-              <span className="text-primary font-semibold"> plano prático pra conquistar seu primeiro emprego.</span>
+              Você não vai assistir vídeos gravados. Serão <span className="text-primary font-semibold">aulas ao vivo</span>, com chat aberto,
+              onde você pode tirar dúvidas na hora e aprender junto com a comunidade.
             </p>
             <p className="text-primary font-semibold text-lg">
-              Mas isso só acontece se você confirmar sua presença AGORA.
+              Reserve esses horários na sua agenda. Sua transformação começa dia 19!
             </p>
           </div>
         </motion.div>
