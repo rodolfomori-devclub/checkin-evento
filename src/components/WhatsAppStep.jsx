@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const WhatsAppStep = ({ onComplete, playSuccessSound, isActive }) => {
+  const { checkinData } = useCheckin()
   const [countdown, setCountdown] = useState(3)
   const [showTimer, setShowTimer] = useState(true)
   const [isChecked, setIsChecked] = useState(false)
@@ -15,7 +17,7 @@ const WhatsAppStep = ({ onComplete, playSuccessSound, isActive }) => {
         if (prev <= 1) {
           // Chegou a 0, abrir WhatsApp
           clearInterval(timer)
-          window.open('https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i', '_blank')
+          window.open(checkinData?.whatsappUrl || 'https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i', '_blank')
           setShowTimer(false)
           return 0
         }
@@ -92,7 +94,7 @@ const WhatsAppStep = ({ onComplete, playSuccessSound, isActive }) => {
             <div className="text-center">
               <p className="text-text-muted text-sm mb-2">Link do Grupo:</p>
               <a
-                href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
+                href={checkinData?.whatsappUrl || "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-500 hover:text-green-400 underline text-sm"

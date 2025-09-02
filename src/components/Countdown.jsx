@@ -1,7 +1,9 @@
 import React, { useState, useEffect, memo, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const Countdown = memo(({ targetDate }) => {
+  const { checkinData } = useCheckin()
   const intervalRef = useRef(null)
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -49,6 +51,27 @@ const Countdown = memo(({ targetDate }) => {
     { label: 'Seg', value: timeLeft.seconds }
   ]
 
+  // Função para formatar a data do countdown
+  const formatCountdownDate = (dateString) => {
+    if (!dateString) return 'Até segunda-feira, 19 de agosto, às 20h'
+    
+    try {
+      const date = new Date(dateString)
+      const options = { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        hour: 'numeric',
+        minute: '2-digit'
+      }
+      
+      const formattedDate = date.toLocaleDateString('pt-BR', options)
+      return `Até ${formattedDate.toLowerCase()}`
+    } catch (error) {
+      return 'Até segunda-feira, 19 de agosto, às 20h'
+    }
+  }
+
   return (
     <div className="space-y-6">
       {/* Countdown Title */}
@@ -62,7 +85,7 @@ const Countdown = memo(({ targetDate }) => {
           CONTAGEM REGRESSIVA
         </h3>
         <p className="text-text-muted" style={{ fontFamily: 'var(--font-sans)' }}>
-          Até segunda-feira, 19 de agosto, às 20h
+          {formatCountdownDate(checkinData?.countdownDate || targetDate)}
         </p>
       </motion.div>
 

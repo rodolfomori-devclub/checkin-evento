@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const ScheduleSection = () => {
+  const { checkinData } = useCheckin()
   const [activeDay, setActiveDay] = useState(0)
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
 
-  const scheduleData = [
+  // Usar dados dinâmicos ou fallback para dados padrão
+  const scheduleData = checkinData?.lessons || [
     {
       id: 0,
       day: 'TERÇA',
@@ -24,82 +27,6 @@ const ScheduleSection = () => {
         'As tecnologias mais procuradas pelas empresas em 2025',
         'Como dominar as ferramentas que o mercado exige',
         'Início do nosso projeto prático + entrega do mapa completo da sua jornada'
-      ]
-    },
-    {
-      id: 1,
-      day: 'QUARTA',
-      date: '20 AGO',
-      title: 'Segunda Tecnologia + O Que Empresas Procuram',
-      time: 'Ao vivo às 20h no Zoom',
-      type: 'live',
-      color: 'emerald',
-      gradient: 'from-emerald-500/20 to-green-500/20',
-      border: 'border-emerald-500/30',
-      icon: '💡',
-      topics: [
-        'Aprendendo nossa segunda tecnologia essencial',
-        'Evolução significativa do nosso projeto prático',
-        'Os requisitos reais que empresas buscam em candidatos',
-        'Como se destacar em processos seletivos',
-        'Habilidades técnicas e comportamentais valorizadas'
-      ]
-    },
-    {
-      id: 2,
-      day: 'QUINTA',
-      date: '21 AGO',
-      title: '⭐ AULA MAIS IMPORTANTE: JavaScript + DevClub',
-      time: 'Ao vivo às 20h no Zoom',
-      type: 'live',
-      color: 'red',
-      gradient: 'from-red-500/20 to-orange-500/20',
-      border: 'border-red-500/30',
-      icon: '🔥',
-      topics: [
-        'JavaScript: a linguagem de programação mais usada do mundo',
-        'Deixando nossa aplicação 90% pronta e funcional',
-        'Técnicas avançadas que impressionam recrutadores',
-        'Tudo sobre o DevClub: sua comunidade de transformação',
-        'Como aproveitar ao máximo nossa metodologia exclusiva'
-      ]
-    },
-    {
-      id: 3,
-      day: 'SÁBADO',
-      date: '23 AGO',
-      title: '🎁 AULA BÔNUS: Tira-Dúvidas Exclusivo com Rodolfo',
-      time: 'Ao vivo às 14h no Zoom',
-      type: 'live',
-      color: 'yellow',
-      gradient: 'from-yellow-500/20 to-amber-500/20',
-      border: 'border-yellow-500/30',
-      icon: '💬',
-      topics: [
-        'Sessão exclusiva de perguntas e respostas ao vivo',
-        'Resolução de dúvidas técnicas do projeto',
-        'Mentoria personalizada para seus desafios',
-        'Dicas avançadas que não cabem nas aulas regulares',
-        'Networking e conexão direta com o instrutor'
-      ]
-    },
-    {
-      id: 4,
-      day: 'DOMINGO',
-      date: '24 AGO',
-      title: 'Masterclass com Fernanda: A Melhor Recrutadora do Brasil',
-      time: 'Ao vivo às 20h no Zoom',
-      type: 'live',
-      color: 'purple',
-      gradient: 'from-purple-500/20 to-violet-500/20',
-      border: 'border-purple-500/30',
-      icon: '👩‍💼',
-      topics: [
-        'Como criar um LinkedIn que gera entrevistas automaticamente',
-        'Currículo perfeito: template que aprovamos em grandes empresas',
-        'Preparação completa para entrevistas técnicas e comportamentais',
-        'As perguntas mais difíceis e como respondê-las com confiança',
-        'Segredos de recrutadores que ninguém te conta'
       ]
     }
   ]

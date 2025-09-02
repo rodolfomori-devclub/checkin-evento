@@ -181,10 +181,10 @@ const CredentialGenerator = ({ name, photo, onCredentialGenerated, shouldGenerat
         ctx.font = '20px monospace'
         ctx.fillText(`ID: #DC2025-${String(ticketId).padStart(4, '0')}`, cardX + 40, nameY + 40)
         
-        // Data do evento
+        // Evento info - sem data específica
         ctx.fillStyle = '#94A3B8'
         ctx.font = 'bold 18px Arial'
-        ctx.fillText('19-25 AGOSTO • 2025', cardX + 40, nameY + 80)
+        ctx.fillText('BOOTCAMP ONLINE • 2025', cardX + 40, nameY + 80)
         
         // Status
         ctx.fillStyle = '#37E359'

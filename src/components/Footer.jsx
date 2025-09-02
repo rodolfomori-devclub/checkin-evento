@@ -1,7 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const Footer = ({ onOpenCheckin }) => {
+  const { checkinData } = useCheckin()
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
@@ -230,7 +232,7 @@ const Footer = ({ onOpenCheckin }) => {
             
             <div className="space-y-4">
               <motion.a
-                href="https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
+                href={checkinData?.whatsappUrl || "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}

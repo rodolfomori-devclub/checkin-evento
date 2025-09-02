@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const WhatsAppButton = () => {
   const [isHovered, setIsHovered] = useState(false)
+  const { checkinData } = useCheckin()
 
-  // DevClub support WhatsApp link
-  const whatsappUrl = "https://go.rodolfomori.com.br/suporte"
+  // Use dynamic WhatsApp URL from checkin data, fallback to support
+  const whatsappUrl = checkinData?.whatsappUrl || "https://go.rodolfomori.com.br/suporte"
 
   return (
     <>

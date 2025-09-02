@@ -4,8 +4,10 @@ import Countdown from './Countdown'
 import VideoSection from './VideoSection'
 import TypingText from './TypingText'
 import CheckinModal from './CheckinModal'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
+  const { checkinData, loading } = useCheckin()
   const [showCTA, setShowCTA] = useState(false)
 
   useEffect(() => {
@@ -23,6 +25,18 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
 
   const handleCloseCheckin = () => {
     setIsCheckinModalOpen(false)
+  }
+
+  // Show loading while fetching data
+  if (loading) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-text-muted">Carregando...</p>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -63,7 +77,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
           <div className="space-y-3 lg:space-y-4">
             <div style={{ fontFamily: 'var(--font-chakra-petch), system-ui, sans-serif' }}>
               <TypingText
-                text="O Bootcamp Programador em 7 Dias está chegando"
+                text={checkinData?.title || "O Bootcamp Programador em 7 Dias está chegando"}
                 className="text-3xl md:text-4xl lg:text-6xl font-bold text-text-light leading-tight"
                 delay={0.8}
               />
@@ -109,7 +123,7 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
             transition={{ delay: 1, duration: 0.6 }}
             className="lg:scale-100 scale-90"
           >
-            <Countdown targetDate="2025-08-19T20:00:00" />
+            <Countdown targetDate={checkinData?.countdownDate || "2025-08-19T20:00:00"} />
           </motion.div>
 
           {/* Subtitle - Shorter on mobile */}

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const FAQSection = ({ onOpenCheckin }) => {
+  const { checkinData } = useCheckin()
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
   
@@ -250,7 +252,7 @@ const FAQSection = ({ onOpenCheckin }) => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <motion.a
-                  href="https://go.rodolfomori.com.br/suporte"
+                  href={checkinData?.whatsappUrl || "https://go.rodolfomori.com.br/suporte"}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}

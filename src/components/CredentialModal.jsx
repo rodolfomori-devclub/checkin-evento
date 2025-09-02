@@ -1,7 +1,9 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useCheckin } from '../contexts/CheckinContext'
 
 const CredentialModal = ({ isOpen, onClose, credentialImage, ticketId, userName }) => {
+  const { checkinData } = useCheckin()
   const socialNetworks = [
     {
       name: 'LinkedIn',
@@ -93,12 +95,11 @@ const CredentialModal = ({ isOpen, onClose, credentialImage, ticketId, userName 
 Acabei de confirmar minha presença no bootcamp que pode mudar minha vida profissional!
 
 ✅ *Meu ingresso:* #DC2025-${String(ticketId).padStart(4, '0')}
-📅 *Data:* 19-25 de Agosto, 2025
 💻 *Modalidade:* 100% Online
 
 Vem comigo nessa jornada! ${window.location.origin}`
 
-    const url = `https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i`
+    const url = checkinData?.whatsappUrl || `https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i`
     window.open(url, '_blank')
     
     // Facebook Pixel - Track WhatsApp share

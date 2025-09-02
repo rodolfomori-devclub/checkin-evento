@@ -6,6 +6,7 @@ import WhatsAppStep from './WhatsAppStep'
 import { sendToGoogleSheets } from '../utils/googleSheets'
 import { saveDataLocally, sendToGoogleSheetsViaWebhook } from '../utils/googleSheetsAlternative'
 import { saveToFirestore } from '../utils/firebase'
+import { useCheckin } from '../contexts/CheckinContext'
 
 
 // Componente memoizado para o input do nome
@@ -48,6 +49,7 @@ const ActionButton = memo(({ onClick, disabled, children, className = "" }) => (
 ))
 
 const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComplete, onClose }) => {
+  const { checkinData } = useCheckin()
   const [formData, setFormData] = useState({
     name: userData.name || '',
     email: userData.email || '',
@@ -127,7 +129,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
       return () => clearTimeout(timer)
     } else if (showTimer && timerCount === 0) {
       // Redirecionar para o Google Calendar
-      const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
+      const calendarUrl = checkinData?.calendarUrl || "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
       window.open(calendarUrl, '_blank')
       setShowTimer(false)
       setTimerCount(3)
@@ -259,7 +261,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           currency: 'BRL'
         });
       }
-      window.open('https://pay.assiny.com.br/38ca3c/node/97708J', '_blank')
+      window.open(checkinData?.recordingUrl || 'https://pay.assiny.com.br/38ca3c/node/97708J', '_blank')
     }
   }, [])
 
@@ -277,7 +279,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
           currency: 'BRL'
         });
       }
-      window.open('https://pay.assiny.com.br/de8237/node/242143', '_blank')
+      window.open(checkinData?.codeUrl || 'https://pay.assiny.com.br/de8237/node/242143', '_blank')
     }
   }, [])
 
@@ -387,10 +389,10 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
         }
         onStepComplete(step.id, { name: formData.name, email: formData.email })
       } else if (step.id === 1) {
-        const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
+        const calendarUrl = checkinData?.calendarUrl || "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
         window.open(calendarUrl, '_blank')
       } else if (step.id === 2) {
-        const whatsappUrl = "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
+        const whatsappUrl = checkinData?.whatsappUrl || "https://sndflw.com/i/bootcamp-programador-com-ia-em-7-dias-i"
         window.open(whatsappUrl, '_blank')
       } else if (step.id === 3) {
         if (!zoomCheckbox) {
@@ -531,7 +533,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
 
     // Se o step 0 estiver completo, mostrar também o conteúdo da agenda
     if (isStepCompleted(0) && !isStepCompleted(1)) {
-      const calendarUrl = "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
+      const calendarUrl = checkinData?.calendarUrl || "https://calendar.google.com/calendar/u/0/r/eventedit?text=Bootcamp+Programador+em+7+Dias+-+Aula+1&details=Link+da+call:+https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&location=https://us06web.zoom.us/j/87985750737?pwd=IY4s28M2H02QTVCBDOcsKFb2Nb1wF1.1&dates=20250819T230000Z/20250820T010000Z"
       
       const agendaContent = (
         <div className="mb-4 p-6 glass-card">
@@ -822,7 +824,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 {recordingOffer === 'yes' && (
                   <div className="mb-4">
                     <a
-                      href="https://pay.assiny.com.br/38ca3c/node/97708J"
+                      href={checkinData?.recordingUrl || "https://pay.assiny.com.br/38ca3c/node/97708J"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
@@ -1015,7 +1017,7 @@ const CheckinSteps = memo(({ currentStep, completedSteps, userData, onStepComple
                 {codeOffer === 'yes' && (
                   <div className="mb-4">
                     <a
-                      href="https://pay.assiny.com.br/de8237/node/242143"
+                      href={checkinData?.codeUrl || "https://pay.assiny.com.br/de8237/node/242143"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
