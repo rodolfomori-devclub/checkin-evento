@@ -247,4 +247,4 @@ const HeroSection = ({ isCheckinModalOpen, setIsCheckinModalOpen }) => {
   )
 }
 
-export default HeroSection 
+export default HeroSection
